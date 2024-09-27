@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Contacts";
+}
+
+<h1>Contacts</h1>
+
+<table id="contactsTable" class="display">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Email Score</th>
+            <th>Phone</th>
+            <th>Work Phone</th>
+            <th>Lead Location</th>
+            <th>Lead Division</th>
+            <th>Lead Title</th>
+            <th>Decision Making Power</th>
+            <th>Seniority Level</th>
+            <th>LinkedIn URL</th>
+            <th>Skills</th>
+            <th>Past Companies</th>
+            <th>Company Name</th>
+            <th>Company Industry</th>
+            <th>Company Size</th>
+            <th>Revenue Range</th>
+            <th>Company Profile Image URL</th>
+        </tr>
+    </thead>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#contactsTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '@Url.Action("GetContacts")',
+                type: 'GET',
+                data: function (d) {
+                    // Serialize additional parameters
+                    return $.extend({}, d, {
+                        CompanyName: $('#CompanyName').val(),
+                        Keyword: $('#Keyword').val(),
+                        // Add other parameters as needed
+                    });
+                }
+            },
+            columns: [
+                { data: 'Name' },
+                { data: 'Email' },
+                { data: 'EmailScore' },
+                { data: 'Phone' },
+                { data: 'WorkPhone' },
+                { data: 'LeadLocation' },
+                { data: 'LeadDivision' },
+                { data: 'LeadTitle' },
+                { data: 'DecisionMakingPower' },
+                { data: 'SeniorityLevel' },
+                { data: 'LinkedInUrl' },
+                { data: 'Skills' },
+                { data: 'PastCompanies' },
+                { data: 'CompanyName' },
+                { data: 'CompanyIndustry' },
+                { data: 'CompanySize' },
+                { data: 'RevenueRange' },
+                { data: 'CompanyProfileImageUrl' }
+            ]
+        });
+    });
+</script>

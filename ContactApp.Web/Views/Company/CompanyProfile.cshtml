@@ -1,0 +1,228 @@
+﻿@model ContactApp.Models.Dtos.CompanyProfileDto
+
+@{
+    Layout = null;//"_LayoutUsers";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.CompanyName</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="~/css/companyprofile.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section with Company Logo and Breadcrumb -->
+        <div class="header-section">
+            <div class="company-database-header">
+                <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/5S4UA7ZlHAZMRXHzE4M1/media/de150f32-09f6-4369-8c5c-7c7f26a96469.png" alt="Company Database">
+                <div class="breadcrumb">
+                    <a href="/ContactFilter">Homepage</a> / @Model.CompanyName
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Overview Section -->
+            <div class="overview">
+                <!-- Header (Company Logo, Name, Domain) -->
+                <div class="header">
+                    <div class="company-logo">
+                        <img src="@Model.CompanyProfileImageUrl" alt="@Model.CompanyName">
+                    </div>
+                    <div class="company-info">
+                        <h1>@Model.CompanyName</h1>
+                        <a class="domain" href="@(!string.IsNullOrEmpty(Model.CompanyWebsite) ? Model.CompanyWebsite : "#")"
+                           target="@(!string.IsNullOrEmpty(Model.CompanyWebsite) ? "_blank" : "_self")"
+                           title="Company Website">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Social Media Icons -->
+                <div class="social-icons">
+                    <a href="@(!string.IsNullOrEmpty(Model.CompanyLinkedinPage) ? Model.CompanyLinkedinPage : "#")"
+                       target="@(!string.IsNullOrEmpty(Model.CompanyLinkedinPage) ? "_blank" : "_self")"
+                       title="LinkedIn" class="linkedin">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+
+                    <a href="@(!string.IsNullOrEmpty(Model.CompanyTwitterPage) ? Model.CompanyTwitterPage : "#")"
+                       target="@(!string.IsNullOrEmpty(Model.CompanyTwitterPage) ? "_blank" : "_self")"
+                       title="Twitter" class="twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+
+                    <a href="@(!string.IsNullOrEmpty(Model.CompanyFacebookPage) ? Model.CompanyFacebookPage : "#")"
+                       target="@(!string.IsNullOrEmpty(Model.CompanyFacebookPage) ? "_blank" : "_self")"
+                       title="Facebook" class="facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+                <!-- Company Details -->
+                <div class="company-details">
+                    <h2>Company Details</h2>
+                    <p>@Model.CompanyDescription</p>
+                    <ul>
+                        <li><strong>HQ Phone:</strong> @Model.CompanyPhoneNumbers</li>
+                        <li>
+                            <strong>Year Founded:</strong>
+                            @if (Model.CompanyFoundedAt.HasValue)
+                            {
+                                @Model.CompanyFoundedAt
+                                ;//.Value.ToString("MM/dd/yyyy")
+                            }
+                            else
+                            {
+                                @:
+                            }
+                        </li>
+                    </ul>
+                    <!-- Employee Levels -->
+                    <h2>Employees by Management Level</h2>
+                    <div class="job-levels">
+                        <div class="job-levels">
+                            <div class="job-level">
+                                <a href="javascript:void(0);" onclick="fetchContacts([@(Model.SeniorityLevelNonManagerId != null ? Model.SeniorityLevelNonManagerId : 0)], '@Model.CompanyName')">
+                                    <span>Non-Manager</span>
+                                    <strong>@(Model.TotalNonManager ?? 0)</strong>
+                                </a>
+                            </div>
+                            <div class="job-level">
+                                <a href="javascript:void(0);" onclick="fetchContacts([@(Model.SeniorityLevelManagerId != null ? Model.SeniorityLevelManagerId : 0)], '@Model.CompanyName')">
+                                    <span>Manager</span>
+                                    <strong>@(Model.TotalManagers ?? 0)</strong>
+                                </a>
+                            </div>
+                            <div class="job-level">
+                                <a href="javascript:void(0);" onclick="fetchContacts([@(Model.SeniorityLevelDirectorId != null ? Model.SeniorityLevelDirectorId : 0)], '@Model.CompanyName')">
+                                    <span>Director</span>
+                                    <strong>@(Model.TotalDirectors ?? 0)</strong>
+                                </a>
+                            </div>
+                            <div class="job-level">
+                                <a href="javascript:void(0);" onclick="fetchContacts([@(Model.SeniorityLevelVPId != null ? Model.SeniorityLevelVPId : 0)], '@Model.CompanyName')">
+                                    <span>VP-Level</span>
+                                    <strong>@(Model.TotalVPLevel ?? 0)</strong>
+                                </a>
+                            </div>
+                            <div class="job-level">
+                                <a href="javascript:void(0);" onclick="fetchContacts([@(Model.SeniorityLevelCLevelId != null ? Model.SeniorityLevelCLevelId : 0)], '@Model.CompanyName')">
+                                    <span>C-Level</span>
+                                    <strong>@(Model.TotalCLevel ?? 0)</strong>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Section (Additional Company Info) -->
+            <div class="right-section">
+                <h2>Company Information</h2>
+                <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> @Model.CompanyLocationText</p>
+                <p><i class="fas fa-industry"></i> <strong>Industry:</strong> @Model.CompanyIndustry</p>
+                <p><i class="fas fa-users"></i> <strong>Employees:</strong> @Model.CompanySize</p>
+                <p><i class="fas fa-dollar-sign"></i> <strong>Revenue:</strong> @Model.RevenueRange</p>
+            </div>
+
+        </div>
+
+        <!-- Footer Section for Industries, Products & Services, Company Codes, and Similar Companies -->
+        <div class="footer">
+            <!-- Industries -->
+            <div class="section">
+                <h4>Industries</h4>
+                <ul>
+                    <li>@Model.CompanyIndustry</li>
+                </ul>
+            </div>
+            <!-- Products & Services -->
+            <div class="section">
+                <h4>Products & Services</h4>
+                <ul>
+                    @if (!string.IsNullOrEmpty(@Model.CompanyProductsServices))
+                    {
+                        var productsServices = @Model.CompanyProductsServices.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var item in productsServices)
+                        {
+                            <li>@item.Trim()</li>
+                        }
+                    }
+                    else
+                    {
+                        <li>No products/services available.</li>
+                    }
+                </ul>
+            </div>
+
+            <!-- Company Codes -->
+            <div class="section">
+                <h4>Company Codes</h4>
+                <ul>
+                    <li><strong>NAICS:</strong> @(Model.CompanyNAICSCode ?? "N/A")</li>
+                    <li><strong>SIC:</strong> @(Model.CompanySICCode ?? "N/A")</li>
+                </ul>
+            </div>
+
+            <!-- Similar Companies -->
+            <div class="section">
+                <h4>Similar Companies</h4>
+                <ul>
+                    @foreach (var similarCompany in Model.RelatedCompanies)
+                    {
+                        <li>
+                            <a href="@Url.Action("CompanyProfile", "Company", new { companyId = similarCompany.CompanyId })" class="company-link">
+                                <img src="@similarCompany.CompanyProfileImageUrl" alt="@similarCompany.CompanyName" style="width:50px;height:50px;" />
+                                @similarCompany.CompanyName
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        fetchContacts(0, '@Model.CompanyName');
+    });
+
+    function fetchContacts(seniorityLevelId, companyName) {
+        const requestData = {
+            seniority_level: seniorityLevelId,
+            company_name: companyName
+        };
+
+        $.ajax({
+            url: '/ContactFilter/GetAll',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (xhr, error, thrown) {
+                console.error('Error fetching contacts:', error);
+            }
+        });
+    }
+
+    function redirectToContactFilter(seniorityLevelId, companyName) {
+        const url = `/ContactFilter/GetAll?seniorityLevelId=${seniorityLevelId}&companyName=${encodeURIComponent(companyName)}`;
+        window.location.href = url;
+    }
+
+</script>

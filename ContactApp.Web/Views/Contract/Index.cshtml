@@ -1,0 +1,294 @@
+﻿@model Contact
+<form method="post">
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <label asp-for="email" class="control-label"></label>
+                <input asp-for="email" class="form-control" />
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="email_score" class="control-label"></label>
+                <input asp-for="email_score" class="form-control" />
+                <span asp-validation-for="email_score" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="phone" class="control-label"></label>
+                <input asp-for="phone" class="form-control" />
+                <span asp-validation-for="phone" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="work_phone" class="control-label"></label>
+                <input asp-for="work_phone" class="form-control" />
+                <span asp-validation-for="work_phone" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="lead_location" class="control-label"></label>
+                <input asp-for="lead_location" class="form-control" />
+                <span asp-validation-for="lead_location" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="lead_division" class="control-label"></label>
+                <input asp-for="lead_division" class="form-control" />
+                <span asp-validation-for="lead_division" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="lead_titles" class="control-label"></label>
+                <input asp-for="lead_titles" class="form-control" />
+                <span asp-validation-for="lead_titles" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="decision_making_power" class="control-label"></label>
+                <input asp-for="decision_making_power" class="form-control" />
+                <span asp-validation-for="decision_making_power" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="seniority_level" class="control-label"></label>
+                <input asp-for="seniority_level" class="form-control" />
+                <span asp-validation-for="seniority_level" class="text-danger"></span>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="linkedin_url" class="control-label"></label>
+                <input asp-for="linkedin_url" class="form-control" />
+                <span asp-validation-for="linkedin_url" class="text-danger"></span>
+            </div>
+        </div>
+
+
+
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="skills" class="control-label"></label>
+                <input asp-for="skills" class="form-control" />
+                <span asp-validation-for="skills" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="past_companies" class="control-label"></label>
+                <input asp-for="past_companies" class="form-control" />
+                <span asp-validation-for="past_companies" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_name" class="control-label"></label>
+                <input asp-for="company_name" class="form-control" />
+                <span asp-validation-for="company_name" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_size" class="control-label"></label>
+                <input asp-for="company_size" class="form-control" />
+                <span asp-validation-for="company_size" class="text-danger"></span>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_website" class="control-label"></label>
+                <input asp-for="company_website" class="form-control" />
+                <span asp-validation-for="company_website" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_phone_numbers" class="control-label"></label>
+                <input asp-for="company_phone_numbers" class="form-control" />
+                <span asp-validation-for="company_phone_numbers" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_location_text" class="control-label"></label>
+                <input asp-for="company_location_text" class="form-control" />
+                <span asp-validation-for="company_location_text" class="text-danger"></span>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_type" class="control-label"></label>
+                <input asp-for="company_type" class="form-control" />
+                <span asp-validation-for="company_type" class="text-danger"></span>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_function" class="control-label"></label>
+                <input asp-for="company_function" class="form-control" />
+                <span asp-validation-for="company_function" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_sector" class="control-label"></label>
+                <input asp-for="company_sector" class="form-control" />
+                <span asp-validation-for="company_sector" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_industry" class="control-label"></label>
+                <input asp-for="company_industry" class="form-control" />
+                <span asp-validation-for="company_industry" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_founded_at" class="control-label"></label>
+                <input asp-for="company_founded_at" class="form-control" />
+                <span asp-validation-for="company_founded_at" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_funding_range" class="control-label"></label>
+                <input asp-for="company_funding_range" class="form-control" />
+                <span asp-validation-for="company_funding_range" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="revenue_range" class="control-label"></label>
+                <input asp-for="revenue_range" class="form-control" />
+                <span asp-validation-for="revenue_range" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="ebitda_range" class="control-label"></label>
+                <input asp-for="ebitda_range" class="form-control" />
+                <span asp-validation-for="ebitda_range" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_facebook_page" class="control-label"></label>
+                <input asp-for="company_facebook_page" class="form-control" />
+                <span asp-validation-for="company_facebook_page" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_twitter_page" class="control-label"></label>
+                <input asp-for="company_twitter_page" class="form-control" />
+                <span asp-validation-for="company_twitter_page" class="text-danger"></span>
+            </div>
+        </div>
+         <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_linkedin_page" class="control-label"></label>
+                <input asp-for="company_linkedin_page" class="form-control" />
+                <span asp-validation-for="company_linkedin_page" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_sic_code" class="control-label"></label>
+                <input asp-for="company_sic_code" class="form-control" />
+                <span asp-validation-for="company_sic_code" class="text-danger"></span>
+            </div>
+        </div>
+         <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_naics_code" class="control-label"></label>
+                <input asp-for="company_naics_code" class="form-control" />
+                <span asp-validation-for="company_naics_code" class="text-danger"></span>
+            </div>
+        </div>
+         <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_description" class="control-label"></label>
+                <input asp-for="company_description" class="form-control" />
+                <span asp-validation-for="company_description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_size_key" class="control-label"></label>
+                <input asp-for="company_size_key" class="form-control" />
+                <span asp-validation-for="company_size_key" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 mb-2 col-12">
+            <div class="form-group">
+                <label asp-for="company_profile_image_url" class="control-label"></label>
+                <input asp-for="company_profile_image_url" class="form-control" />
+                <span asp-validation-for="company_profile_image_url" class="text-danger"></span>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="col-12 d-flex justify-content-end mb-2">
+            <button type="submit" class="btn btn-primary" asp-controller="Contract" asp-action="index">Save</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+}

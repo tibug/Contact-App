@@ -1,0 +1,643 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Filter UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .filter-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 350px;
+            height: 85%; /* Height adjusts based on content */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .clear-filters, .search-btn {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            flex: 1;
+        }
+
+        .search-btn {
+            background-color: #007bff; /* Change search button to blue */
+        }
+
+            .clear-filters:hover, .search-btn:hover {
+                background-color: #0056b3;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+        .filter-category {
+            margin-bottom: 20px;
+        }
+
+        .filter-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 14px;
+            background-color: #e0e0e0;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #333;
+            transition: background-color 0.3s;
+        }
+
+            .filter-header:hover {
+                background-color: #d0d0d0;
+            }
+
+            .filter-header i {
+                margin-right: 12px;
+                color: #007bff;
+            }
+
+        .filter-options {
+            display: none;
+            padding: 12px 0;
+            margin-top: 8px;
+            border-left: 4px solid #007bff;
+            padding-left: 16px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+            .filter-options.active {
+                display: block;
+            }
+
+        .filter-option {
+            margin: 8px 0;
+        }
+
+            .filter-option input {
+                width: 80%;
+                padding: 8px;
+                border: 1px solid #ced4da;
+                border-radius: 6px;
+                font-size: 14px;
+            }
+
+        .expand-icon {
+            font-size: 14px;
+        }
+
+        .selected-filters {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .filter-badge {
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 50px;
+            padding: 6px 12px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+            .filter-badge i {
+                margin-left: 6px;
+                cursor: pointer;
+            }
+        /* Ensure checkboxes and labels are aligned properly */
+        .filter-option {
+            position: relative; /* Ensure dropdown is positioned correctly */
+        }
+
+        .dropdown-content4 {
+            display: none; /* Hidden by default */
+            position: absolute; /* Position relative to .filter-option */
+            top: 100%; /* Position below the input field */
+            left: 0;
+            right: 0;
+            background-color: #fff; /* Background color */
+            border: 1px solid #ddd; /* Border color */
+            z-index: 1000; /* Ensure it appears above other elements */
+            max-height: 200px; /* Optional: limit the height */
+            overflow-y: auto; /* Optional: add scroll if content overflows */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Optional: add shadow */
+        }
+
+            /* Display the dropdown when .show class is added */
+            .dropdown-content4.show {
+                display: block; /* Show the dropdown */
+            }
+
+        /* Style for each item in the list */
+        .list-group-item {
+            padding: 8px 10px; /* Adjust padding for better spacing */
+            margin-bottom: 4px; /* Space between items */
+            display: flex;
+            align-items: center;
+        }
+
+        /* Style the checkboxes */
+        .form-check-input {
+            width: 16px; /* Adjust width of the checkbox */
+            height: 16px; /* Adjust height of the checkbox */
+            margin-right: 8px; /* Space between checkbox and label */
+            /* Optional: adjust border-radius if you want rounded checkboxes */
+            border-radius: 2px;
+        }
+
+        /* Style the labels */
+        .form-check-label {
+            font-size: 14px; /* Adjust font size of the label */
+            cursor: pointer; /* Change cursor to pointer for clickable labels */
+        }
+
+        /* Optional: Add styles for the Select All checkbox */
+        /* #selectAllcompanysize, #AgricultureCheckbox, #Software22Checkbox, #Software20Checkbox, #Software18Checkbox, #Software1Checkbox, #Retail1Checkbox, #Real1Checkbox, #Organizations1Checkbox, #SoftwareCheckbox, #RetailCheckbox, #MineralsCheckbox, #MediaCheckbox, #ManufacturingCheckbox, #HospitalsCheckbox, #HospitalityCheckbox, #ConglomeratesCheckbox, #HealthcareCheckbox, #GovernmentCheckbox, #FinanceTempCheckbox, #EnergyCheckbox, #EducationCheckbox, #ConsumerCheckbox, #ConstructionCheckbox, #BusinessCheckbox, #CSuiteCheckbox, #EngineeringCheckbox {
+                                                                                                                                                                                                                                                                                                                                    width: 16px;
+                                                                                                                                                                                                                                                                                                                                    height: 16px;
+                                                                                                                                                                                                                                                                                                                                    margin-right: 8px;
+                                                                                                                                                                                                                                                                                                                                } */
+
+        .forminput {
+            width: 15px !important;
+            height: 16px !important;
+            margin-right: 8px;
+        }
+
+        input[type="checkbox"] {
+            width: 16px; /* Set width of checkbox */
+            height: 16px; /* Set height of checkbox */
+            margin-right: 8px; /* Space between checkbox and other elements */
+        }
+
+        input[type="text"] {
+            width: 99%;
+        }
+    </style>
+</head>
+<body>
+    <div id="divclear" style="position: sticky; top: 0; z-index: 1000; background-color: white;">
+        <div style="margin-top: -3px;padding-top: 9px;text-align: center;">
+            <button class="clear-filters">
+                Clear All Filters
+            </button>
+            <button class="search-btn" id="btnsearch"><i class="fas fa-search"></i> Search</button>
+        </div>
+    </div>
+    <div id="sidebar" class="filter-container ">
+
+        <div class="filter-category">
+            <div class="filter-header">
+                <i class="fas fa-building"></i>
+                <span>Company</span>
+                <i class="expand-icon">&#9660;</i>
+            </div>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <label>Company Name</label>
+                    <input type="text" id="txtcompany" class="form-control" placeholder="Search by Company Name">
+                    <input type="hidden" id="txtcompany-filter-model" name="filters">
+                </div>
+                <div class="filter-option">
+                    <label>Company Size</label>
+                    <div class="form-group has-search">
+                        <input type="text" id="industrySearch4" placeholder="Search by Company Size" onfocus="showDropdown4()" onkeyup="filterIndustries4()">
+                    </div>
+                    <div class="dropdown-content4" id="dropdownContent4">
+                        <div class="industry4">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" onchange="toggleChildCheckboxes(this)" id="selectAllcompanysize">
+                                        <label class="form-check-label" for="selectAllcompanysize">Select All</label>
+                                    </div>
+                                </li>
+                                @if (ViewBag.CompanySizes != null)
+                                {
+                                    var companySizes = ViewBag.CompanySizes as List<CompanySizes>;
+
+                                    if (companySizes != null)
+                                    {
+                                        foreach (var item in companySizes)
+                                        {
+                                            var sanitizedCompanySizeId = $"companysize-{item.Id}";
+                                            <li class="list-group-item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input child-checkbox selectAllcompanysize" type="checkbox" id="@sanitizedCompanySizeId" value="@item.Id">
+                                                    <label class="form-check-label" for="@sanitizedCompanySizeId">@item.CompanySize</label>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="selected-filters" data-filter="company"></div>
+        </div>
+        <div class="filter-category">
+            <div class="filter-header">
+                <i class="fas fa-user"></i>
+                <span>Contact</span>
+                <i class="expand-icon">&#9660;</i>
+            </div>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <label>Name</label>
+                    <input type="text" id="txtname" placeholder="Search by Name">
+                    <input type="hidden" id="txtname-filter-model" name="filters">
+                </div>
+                <div class="filter-option">
+                    <label>Email</label>
+                    <input type="text" id="txtworkemail" placeholder="Search by Email">
+                    <input type="hidden" id="txtworkemail-filter-model" name="filters">
+                </div>
+                <div class="filter-option">
+                    <label>Accuracy Score</label>
+                    <div class="form-group has-search">
+                        <input type="text" id="industrySearch6" class="form-control" placeholder="Accuracy Score" onfocus="showDropdown6()" onkeyup="filterIndustries6()">
+                    </div>
+                    <div class="dropdown-content6" id="dropdownContent6">
+                        <div class="industry6">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" onchange="toggleChildCheckboxes(this)" id="selectAllemalscore">
+                                        <label class="form-check-label" for="selectAllemalscore">Select All</label>
+                                    </div>
+                                </li>
+                                @if (ViewBag.AccuracyScores != null)
+                                {
+                                    var accuracyScores = ViewBag.AccuracyScores as List<AccuracyScore>;
+
+                                    if (accuracyScores != null)
+                                    {
+                                        foreach (var item in accuracyScores)
+                                        {
+                                            var sanitizedAccuracyScores = $"accuracyScores-{item.Id}";
+                                            <li class="list-group-item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input child-checkbox selectAllemalscore" type="checkbox" id="@sanitizedAccuracyScores" value="@item.Id">
+                                                    <label class="form-check-label" for="@sanitizedAccuracyScores">@item.Score</label>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="selected-filters" data-filter="contact"></div>
+        </div>
+        <div class="filter-category">
+            <div class="filter-header">
+                <i class="fas fa-map"></i>
+                <span>Location</span>
+                <i class="expand-icon">&#9660;</i>
+            </div>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <label>Country / State / City</label>
+                    <input type="text" id="txtleadlocation" placeholder="Location">
+                    <input type="hidden" id="txtleadlocation-filter-model" name="filters">
+                </div>
+            </div>
+            <div class="selected-filters" data-filter="Location"></div>
+        </div>
+
+        <div class="filter-category">
+            <div class="filter-header">
+                <i class="fa fa-briefcase"></i>
+                <span>Job Department</span>
+                <i class="expand-icon">&#9660;</i>
+            </div>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <div class="dropdown">
+                        <div class="form-group has-search">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" id="industrySearch" class="form-control" placeholder="Search Department" onfocus="showDropdown()" onkeyup="filterIndustries()">
+                        </div>
+                        <div class="dropdown-content" id="dropdownContent">
+                            @if (ViewBag.JobCategories != null)
+                            {
+                                var jobCategories = ViewBag.JobCategories as List<JobCategory>;
+
+                                if (jobCategories != null)
+                                {
+                                    @foreach (var category in ViewBag.jobCategories)
+                                    {
+                                        var sanitizedCategoryName = category.CategoryName
+                                        .Replace(" ", "")
+                                        .Replace("-", "")
+                                        .ToLower();
+
+                                        <div class="industry">
+                                            <input type="checkbox"
+                                                   id="@sanitizedCategoryName-Checkbox"
+                                                   onchange="syncSubcategories('@sanitizedCategoryName-Subcategories', this)">
+                                            <span class="toggle-icon"
+                                                  id="@sanitizedCategoryName-ToggleIcon"
+                                                  onclick="toggleSubcategories('@sanitizedCategoryName-Subcategories', '@sanitizedCategoryName-ToggleIcon')">›</span>
+                                            <label for="@sanitizedCategoryName-Checkbox"
+                                                   class="industry-label"
+                                                   onclick="toggleSubcategories('@sanitizedCategoryName-Subcategories', '@sanitizedCategoryName-ToggleIcon')">
+                                                @category.CategoryName
+                                            </label>
+                                            <div class="subcategories" id="@sanitizedCategoryName-Subcategories">
+                                                @* Initialize index variable outside of the loop *@
+                                                @{
+                                                    int index = 1;
+                                                }
+                                                @foreach (var title in category.Titles)
+                                                {
+                                                    <div class="form-check">
+                                                        <input class="form-check-input child-checkbox forminput subcategory-checkbox departjob@(index) departjob"
+                                                               type="checkbox"
+                                                               id="@($"jobCategories-{title.Id}")"
+                                                               value="@title.Id">
+                                                        <label class="form-check-label"
+                                                               for="@($"jobCategories-{title.Id}")">
+                                                            @title.Division
+                                                        </label>
+                                                    </div>
+                                                    @* Increment index after each checkbox *@
+                                                    index++;
+                                                }
+                                            </div>
+
+                                        </div>
+
+                                    }
+                                }
+                            }
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="selected-filters" data-filter="jobDepartment"></div>
+        </div>
+
+        <div class="filter-category">
+            <div class="filter-header">
+                <i class="fas fa-level-up-alt"></i>
+                <span>Level</span>
+                <i class="expand-icon">&#9660;</i>
+            </div>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <label for="industrySearch">Search Level</label>
+                    <div class="dropdown5">
+                        <div class="form-group has-search">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" id="industrySearch5" class="form-control" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Search Level" onfocus="showDropdown5()" onkeyup="filterIndustries5()">
+                        </div>
+                        <div class="dropdown-content5" id="dropdownContent5">
+                            <div class="industry5">
+                                <input class="form-check-input" type="checkbox" onchange="toggleChildCheckboxes(this)" id="selectAlllevel">
+                                <label class="form-check-label" for="selectAllLevels">Select All</label>
+                                <div id="CSuiteSubcategories">
+                                    @if (ViewBag.Levels != null)
+                                    {
+                                        var seniorityLevels = ViewBag.Levels as List<SeniorityLevels>;
+
+                                        if (seniorityLevels != null)
+                                        {
+                                            foreach (var item in seniorityLevels)
+                                            {
+                                                var sanitizedSeniorityLevels = $"seniorityLevels-{item.Id}";
+                                                <li class="list-group-item">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input child-checkbox selectAlllevel forminput" type="checkbox" id="@sanitizedSeniorityLevels" value="@item.Id">
+                                                        <label class="form-check-label" for="@sanitizedSeniorityLevels">@item.SeniorityLevel</label>
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="selected-filters" data-filter="level"></div>
+        </div>
+
+        <div class="filter-category">
+            <div class="filter-header">
+                <i class="fas fa-industry"></i>
+                <span>Company Sector</span>
+                <i class="expand-icon">&#9660;</i>
+            </div>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <label>Search Sector</label>
+                    <input type="text" id="txtkeyword" placeholder="Search by Sector">
+                    <input type="hidden" id="txtkeyword-filter-model" name="filters">
+                </div>
+            </div>
+            <div class="selected-filters" data-filter="sector"></div>
+        </div>
+
+        <div class="filter-category">
+            <div class="filter-header">
+                <i class="fas fa-tag"></i>
+                <span>Job Title</span>
+                <i class="expand-icon">&#9660;</i>
+            </div>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <label>Search Job Title</label>
+                    <input type="text" id="txtjobtitle" placeholder="Search by Job Title">
+                    <input type="hidden" id="txtjobtitle-filter-model" name="filters">
+                </div>
+            </div>
+            <div class="selected-filters" data-filter="title"></div>
+        </div>
+
+        <div class="filter-category">
+            <div class="filter-header">
+                <i class="fas fa-dollar-sign"></i>
+                <span>Revenue</span>
+                <i class="expand-icon">&#9660;</i>
+            </div>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <label>Revenue (In millions)</label>
+                    <div class="dropdown3">
+                        <div class="form-group has-search">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" id="industrySearch3" placeholder="Search Revenue (In millions)" onfocus="showDropdown3()" onkeyup="filterIndustries3()">
+                        </div>
+                        <div class="dropdown-content3" id="dropdownContent3">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input forminput" type="checkbox" onchange="toggleChildCheckboxes(this)" id="selectAllrevenue">
+                                        <label class="form-check-label" for="selectAllrevenue">Select All</label>
+                                    </div>
+                                </li>
+                                @if (ViewBag.RevenueSizes != null)
+                                {
+                                    var revenueSize = ViewBag.RevenueSizes as List<RevenueSize>;
+
+                                    if (revenueSize != null)
+                                    {
+                                        foreach (var item in revenueSize)
+                                        {
+                                            var sanitizedRevenueSize = $"revenueSize-{item.Id}";
+                                            <li class="list-group-item">
+                                                <div class="form-check">
+                                                    <input class="form-check-input child-checkbox selectAllrevenue" type="checkbox" id="@sanitizedRevenueSize" value="@item.Id">
+                                                    <label class="form-check-label" for="@sanitizedRevenueSize">@item.RevenueRange</label>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="selected-filters" data-filter="revenue"></div>
+        </div>
+
+        <div class="filter-category">
+            <div class="filter-header">
+                <i class="fas fa-cogs"></i>
+                <span>Industry</span>
+                <i class="expand-icon">&#9660;</i>
+            </div>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <label for="industrySearch2">Company Industry</label>
+                    <div class="form-group has-search">
+                        <input type="text" id="industrySearch2" class="form-control" placeholder="Company Industry" onfocus="showDropdown2()" onkeyup="filterIndustries2()">
+                    </div>
+                    @{
+                        var companyIndustries = ViewBag.Industries as List<IndustryCategory>;
+                    }
+
+                    <div class="dropdown-content2" id="dropdownContent2">
+                        @if (companyIndustries?.Any() == true)
+                        {
+                            foreach (var category in companyIndustries)
+                            {
+                                var sanitizedCategoryName = category.CategoryName
+                                .Replace(" ", "")
+                                .Replace("-", "")
+                                .ToLower();
+
+                                <div class="industry2">
+                                    <input type="checkbox"
+                                           id="@sanitizedCategoryName-Checkbox"
+                                           onchange="syncSubcategories('@sanitizedCategoryName-Subcategories', this)">
+                                    <span class="toggle-icon"
+                                          id="@sanitizedCategoryName-ToggleIcon"
+                                          onclick="toggleSubcategories('@sanitizedCategoryName-Subcategories', '@sanitizedCategoryName-ToggleIcon')">&#8250;</span>
+                                    <label for="@sanitizedCategoryName-Checkbox"
+                                           class="industry-label"
+                                           onclick="toggleSubcategories('@sanitizedCategoryName-Subcategories', '@sanitizedCategoryName-ToggleIcon')">
+                                        @category.CategoryName
+                                    </label>
+                                    <div class="subcategories" id="@sanitizedCategoryName-Subcategories">
+                                        <div class="subcategory">
+                                            @{
+                                                var index = 1;
+                                            }
+                                            @if (category.Industries?.Any() == true)
+                                            {
+                                                foreach (var title in category.Industries)
+                                                {
+                                                    var sanitizedIndustries = $"Industries-{title.Id}";
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input child-checkbox subcategory-checkbox forminput heading@(index) heading"
+                                                                       type="checkbox"
+                                                                       id="@sanitizedIndustries"
+                                                                       value="@title.Id">
+                                                                <label class="form-check-label"
+                                                                       for="@sanitizedIndustries">
+                                                                    @title.CompanyIndustry
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    index++;
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="filter-category">
+        <div class="filter-header">
+            <i class="fas fa-code"></i>
+            <span>Industry Code</span>
+            <i class="expand-icon">&#9660;</i>
+        </div>
+        <div class="filter-options">
+            <div class="filter-option">
+                <label>NAICS Code</label>
+                <input type="text" id="txtnaicscode" placeholder="&nbsp;&nbsp;NAICS Code">
+
+                <input type="hidden" id="txtnaicscode-filter-model" name="filters">
+            </div>
+            <div class="filter-option">
+                <label>SIC Code</label>
+                <input type="text" id="txtsiccode" placeholder="&nbsp;&nbsp;SIC Code">
+
+                <input type="hidden" id="txtsiccode-filter-model" name="filters">
+            </div>
+        </div>
+        <div class="selected-filters" data-filter="code"></div>
+    </div>
+    </div>
+
+    <script src="~/js/script.js"></script>
+</body>
+</html>
