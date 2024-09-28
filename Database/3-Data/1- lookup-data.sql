@@ -364,3 +364,15 @@ INSERT INTO CompanyIndustries (Heading, CompanyIndustry) VALUES
 ('Heading24', 'Conglomerates');
 
 Go
+INSERT INTO CompanySizes (CompanySize)
+VALUES
+('0 - 9'),
+('20 - 49'),
+('50 - 99'),
+('100 - 249'),
+('250 - 499'),
+('500 - 999'),
+('1,000 - 4,999'),
+('5,000 - 9,999'),
+('10,000+');
+Go

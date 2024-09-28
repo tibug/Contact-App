@@ -16,6 +16,17 @@ AND NOT EXISTS (
     WHERE Location = tblContacts.lead_location
 );
 
+-- Insert data into CompanySizes
+INSERT INTO CompanySizes (CompanySize)
+SELECT DISTINCT company_size
+FROM tblContacts
+WHERE company_size IS NOT NULL
+AND NOT EXISTS (
+    SELECT 1 
+    FROM CompanySizes 
+    WHERE CompanySize = tblContacts.company_size
+);
+
 -- Insert data into LeadDivisions
 INSERT INTO LeadDivisions (Division)
 SELECT DISTINCT lead_division

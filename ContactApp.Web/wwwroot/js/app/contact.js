@@ -412,6 +412,12 @@ function initializeDataTable() {
 }
 
 function getJsonData() {
+    var txtCompanyNaicsCode = $('#txtnaicscode-filter-model').val();
+    var companyNaicsCodeValue = txtCompanyNaicsCode ? parseInt(txtCompanyNaicsCode, 10) : null;
+
+    var txtCompanySicCode = $('#txtsiccode-filter-model').val();
+    var companySicCodeValue = txtCompanySicCode ? parseInt(txtCompanySicCode, 10) : null;
+
     var data = {
         company_name: $('#txtcompany-filter-model').val(),
         keyword: $('#txtkeyword-filter-model').val(),
@@ -425,8 +431,8 @@ function getJsonData() {
         lead_location: $('#txtleadlocation-filter-model').val(),
         name: $('#txtname-filter-model').val(),
         email: $('#txtworkemail-filter-model').val(),
-        company_naics_code: $('#txtnaicscode-filter-model').val(),
-        company_sic_code: $('#txtsiccode-filter-model').val(),
+        company_naics_code: companyNaicsCodeValue,
+        company_sic_code: companySicCodeValue,
         PerExportLimit: $('#txtPerExportLimit').val()
     };
     console.log('Generated JSON Data:', data); // Debugging
