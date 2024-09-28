@@ -93,34 +93,74 @@
                     <div class="job-levels">
                         <div class="job-levels">
                             <div class="job-level">
-                                <a href="javascript:void(0);" onclick="fetchContacts([@(Model.SeniorityLevelNonManagerId != null ? Model.SeniorityLevelNonManagerId : 0)], '@Model.CompanyName')">
-                                    <span>Non-Manager</span>
+                                @if ((Model.TotalNonManager ?? 0) > 0)
+                                {
+                                    <a href="javascript:void(0);" onclick="redirectToContactFilter([@(Model.SeniorityLevelNonManagerId != null ? Model.SeniorityLevelNonManagerId : 0)], '@Model.CompanyName')">
+                                        <span>C-Level</span>
+                                        <strong>@(Model.TotalNonManager ?? 0)</strong>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span>C-Level</span>
                                     <strong>@(Model.TotalNonManager ?? 0)</strong>
-                                </a>
+                                }
                             </div>
                             <div class="job-level">
-                                <a href="javascript:void(0);" onclick="fetchContacts([@(Model.SeniorityLevelManagerId != null ? Model.SeniorityLevelManagerId : 0)], '@Model.CompanyName')">
-                                    <span>Manager</span>
+                                @if ((Model.TotalManagers ?? 0) > 0)
+                                {
+                                    <a href="javascript:void(0);" onclick="redirectToContactFilter([@(Model.SeniorityLevelManagerId != null ? Model.SeniorityLevelManagerId : 0)], '@Model.CompanyName')">
+                                        <span>C-Level</span>
+                                        <strong>@(Model.TotalManagers ?? 0)</strong>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span>C-Level</span>
                                     <strong>@(Model.TotalManagers ?? 0)</strong>
-                                </a>
+                                }
                             </div>
                             <div class="job-level">
-                                <a href="javascript:void(0);" onclick="fetchContacts([@(Model.SeniorityLevelDirectorId != null ? Model.SeniorityLevelDirectorId : 0)], '@Model.CompanyName')">
-                                    <span>Director</span>
+                                @if ((Model.TotalDirectors ?? 0) > 0)
+                                {
+                                    <a href="javascript:void(0);" onclick="redirectToContactFilter([@(Model.SeniorityLevelDirectorId != null ? Model.SeniorityLevelDirectorId : 0)], '@Model.CompanyName')">
+                                        <span>C-Level</span>
+                                        <strong>@(Model.TotalDirectors ?? 0)</strong>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span>C-Level</span>
                                     <strong>@(Model.TotalDirectors ?? 0)</strong>
-                                </a>
+                                }
                             </div>
                             <div class="job-level">
-                                <a href="javascript:void(0);" onclick="fetchContacts([@(Model.SeniorityLevelVPId != null ? Model.SeniorityLevelVPId : 0)], '@Model.CompanyName')">
-                                    <span>VP-Level</span>
+                                @if ((Model.TotalVPLevel ?? 0) > 0)
+                                {
+                                    <a href="javascript:void(0);" onclick="redirectToContactFilter([@(Model.SeniorityLevelVPId != null ? Model.SeniorityLevelVPId : 0)], '@Model.CompanyName')">
+                                        <span>C-Level</span>
+                                        <strong>@(Model.TotalVPLevel ?? 0)</strong>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span>C-Level</span>
                                     <strong>@(Model.TotalVPLevel ?? 0)</strong>
-                                </a>
+                                }
                             </div>
                             <div class="job-level">
-                                <a href="javascript:void(0);" onclick="fetchContacts([@(Model.SeniorityLevelCLevelId != null ? Model.SeniorityLevelCLevelId : 0)], '@Model.CompanyName')">
+                                @if ((Model.TotalCLevel ?? 0) > 0)
+                                {
+                                    <a href="javascript:void(0);" onclick="redirectToContactFilter([@(Model.SeniorityLevelCLevelId != null ? Model.SeniorityLevelCLevelId : 0)], '@Model.CompanyName')">
+                                        <span>C-Level</span>
+                                        <strong>@(Model.TotalCLevel ?? 0)</strong>
+                                    </a>
+                                }
+                                else
+                                {
                                     <span>C-Level</span>
                                     <strong>@(Model.TotalCLevel ?? 0)</strong>
-                                </a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -196,32 +236,9 @@
 </html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function () {
-        fetchContacts(0, '@Model.CompanyName');
-    });
-
-    function fetchContacts(seniorityLevelId, companyName) {
-        const requestData = {
-            seniority_level: seniorityLevelId,
-            company_name: companyName
-        };
-
-        $.ajax({
-            url: '/ContactFilter/GetAll',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(requestData),
-            success: function (response) {
-                console.log(response);
-            },
-            error: function (xhr, error, thrown) {
-                console.error('Error fetching contacts:', error);
-            }
-        });
-    }
 
     function redirectToContactFilter(seniorityLevelId, companyName) {
-        const url = `/ContactFilter/GetAll?seniorityLevelId=${seniorityLevelId}&companyName=${encodeURIComponent(companyName)}`;
+        const url = `/ContactFilter/index?companyName=${encodeURIComponent(companyName)}&seniorityLevelId=${seniorityLevelId}`;
         window.location.href = url;
     }
 

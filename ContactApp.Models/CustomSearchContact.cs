@@ -19,10 +19,9 @@ public class CustomSearchContact
     public string? lead_location { get; set; }
     public string? name { get; set; }
     public string? email { get; set; }
-    public string? company_naics_code { get; set; }
-    public string? company_sic_code { get; set; }
-    public string? company_profile_image_url { get; set; }
-    public string? linkedin_url { get; set; }
+    public string? company_sector { get; set; }
+    public int? company_naics_code { get; set; }
+    public int? company_sic_code { get; set; }
     public int? PerExportLimit { get; set; }
 
     public int PageNumber => (Start / Length) + 1;

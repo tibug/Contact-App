@@ -297,7 +297,7 @@ public class ContactFilterController : Controller
         return industryCategories;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int? seniorityLevel, string companyName = "")
     {
 
         string email = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Email, StringComparison.OrdinalIgnoreCase)).Value;
@@ -323,6 +323,10 @@ public class ContactFilterController : Controller
             ViewBag.Levels = levels;
             ViewBag.Industries = industries;
             ViewBag.JobCategories = jobCategories;
+
+            // Prepopulate filters if available
+            ViewBag.SelectedSeniorityLevel = seniorityLevel ?? 0;
+            ViewBag.CompanyName = companyName;
         }
         catch (Exception ex)
         {

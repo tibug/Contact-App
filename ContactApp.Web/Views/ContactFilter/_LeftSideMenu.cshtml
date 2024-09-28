@@ -179,10 +179,10 @@
 
         /* Optional: Add styles for the Select All checkbox */
         /* #selectAllcompanysize, #AgricultureCheckbox, #Software22Checkbox, #Software20Checkbox, #Software18Checkbox, #Software1Checkbox, #Retail1Checkbox, #Real1Checkbox, #Organizations1Checkbox, #SoftwareCheckbox, #RetailCheckbox, #MineralsCheckbox, #MediaCheckbox, #ManufacturingCheckbox, #HospitalsCheckbox, #HospitalityCheckbox, #ConglomeratesCheckbox, #HealthcareCheckbox, #GovernmentCheckbox, #FinanceTempCheckbox, #EnergyCheckbox, #EducationCheckbox, #ConsumerCheckbox, #ConstructionCheckbox, #BusinessCheckbox, #CSuiteCheckbox, #EngineeringCheckbox {
-                                                                                                                                                                                                                                                                                                                                    width: 16px;
-                                                                                                                                                                                                                                                                                                                                    height: 16px;
-                                                                                                                                                                                                                                                                                                                                    margin-right: 8px;
-                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                            width: 16px;
+                                                                                                                                                                                                                                                                                                                                                                            height: 16px;
+                                                                                                                                                                                                                                                                                                                                                                            margin-right: 8px;
+                                                                                                                                                                                                                                                                                                                                                                        } */
 
         .forminput {
             width: 15px !important;
@@ -211,7 +211,6 @@
         </div>
     </div>
     <div id="sidebar" class="filter-container ">
-
         <div class="filter-category">
             <div class="filter-header">
                 <i class="fas fa-building"></i>
@@ -221,7 +220,7 @@
             <div class="filter-options">
                 <div class="filter-option">
                     <label>Company Name</label>
-                    <input type="text" id="txtcompany" class="form-control" placeholder="Search by Company Name">
+                    <input type="text" id="txtcompany" class="form-control" placeholder="Search by Company Name" value="@ViewBag.CompanyName">
                     <input type="hidden" id="txtcompany-filter-model" name="filters">
                 </div>
                 <div class="filter-option">
@@ -229,7 +228,7 @@
                     <div class="form-group has-search">
                         <input type="text" id="industrySearch4" placeholder="Search by Company Size" onfocus="showDropdown4()" onkeyup="filterIndustries4()">
                     </div>
-                    <div class="dropdown-content4" id="dropdownContent4">
+                    <div class="dropdown-content" id="dropdownContent4">
                         <div class="industry4">
                             <ul class="list-group">
                                 <li class="list-group-item">
@@ -256,6 +255,7 @@
                                         }
                                     }
                                 }
+
                             </ul>
                         </div>
                     </div>
@@ -285,7 +285,7 @@
                     <div class="form-group has-search">
                         <input type="text" id="industrySearch6" class="form-control" placeholder="Accuracy Score" onfocus="showDropdown6()" onkeyup="filterIndustries6()">
                     </div>
-                    <div class="dropdown-content6" id="dropdownContent6">
+                    <div class="dropdown-content" id="dropdownContent6">
                         <div class="industry6">
                             <ul class="list-group">
                                 <li class="list-group-item">
@@ -425,7 +425,7 @@
                             <span class="fa fa-search form-control-feedback"></span>
                             <input type="text" id="industrySearch5" class="form-control" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Search Level" onfocus="showDropdown5()" onkeyup="filterIndustries5()">
                         </div>
-                        <div class="dropdown-content5" id="dropdownContent5">
+                        <div class="dropdown-content" id="dropdownContent5">
                             <div class="industry5">
                                 <input class="form-check-input" type="checkbox" onchange="toggleChildCheckboxes(this)" id="selectAlllevel">
                                 <label class="form-check-label" for="selectAllLevels">Select All</label>
@@ -438,10 +438,11 @@
                                         {
                                             foreach (var item in seniorityLevels)
                                             {
+                                                var isChecked = item.Id == ViewBag.SelectedSeniorityLevel ? "checked" : "";
                                                 var sanitizedSeniorityLevels = $"seniorityLevels-{item.Id}";
                                                 <li class="list-group-item">
                                                     <div class="form-check">
-                                                        <input class="form-check-input child-checkbox selectAlllevel forminput" type="checkbox" id="@sanitizedSeniorityLevels" value="@item.Id">
+                                                        <input class="form-check-input child-checkbox selectAlllevel forminput" type="checkbox" id="@sanitizedSeniorityLevels" value="@item.Id" @isChecked>
                                                         <label class="form-check-label" for="@sanitizedSeniorityLevels">@item.SeniorityLevel</label>
                                                     </div>
                                                 </li>
@@ -467,8 +468,8 @@
             <div class="filter-options">
                 <div class="filter-option">
                     <label>Search Sector</label>
-                    <input type="text" id="txtkeyword" placeholder="Search by Sector">
-                    <input type="hidden" id="txtkeyword-filter-model" name="filters">
+                    <input type="text" id="txtSector" placeholder="Search by Sector">
+                    <input type="hidden" id="txtSector-filter-model" name="filters">
                 </div>
             </div>
             <div class="selected-filters" data-filter="sector"></div>
@@ -504,7 +505,7 @@
                             <span class="fa fa-search form-control-feedback"></span>
                             <input type="text" id="industrySearch3" placeholder="Search Revenue (In millions)" onfocus="showDropdown3()" onkeyup="filterIndustries3()">
                         </div>
-                        <div class="dropdown-content3" id="dropdownContent3">
+                        <div class="dropdown-content" id="dropdownContent3">
                             <ul class="list-group">
                                 <li class="list-group-item">
                                     <div class="form-check mb-2">
@@ -554,7 +555,7 @@
                         var companyIndustries = ViewBag.Industries as List<IndustryCategory>;
                     }
 
-                    <div class="dropdown-content2" id="dropdownContent2">
+                    <div class="dropdown-content" id="dropdownContent2">
                         @if (companyIndustries?.Any() == true)
                         {
                             foreach (var category in companyIndustries)
@@ -611,31 +612,36 @@
                     </div>
 
                 </div>
+                <div class="filter-option">
+                    <label>Keywords</label>
+                    <input type="text" class="form-control" id="txtkeyword" placeholder="&nbsp;&nbsp;Keywords">
+                    <input type="hidden" id="txtkeyword-filter-model" name="filters">
+                </div>
             </div>
+            <div class="selected-filters" data-filter="company industry"></div>
         </div>
-    </div>
-    <div class="filter-category">
-        <div class="filter-header">
-            <i class="fas fa-code"></i>
-            <span>Industry Code</span>
-            <i class="expand-icon">&#9660;</i>
-        </div>
-        <div class="filter-options">
-            <div class="filter-option">
-                <label>NAICS Code</label>
-                <input type="text" id="txtnaicscode" placeholder="&nbsp;&nbsp;NAICS Code">
+        <div class="filter-category">
+            <div class="filter-header">
+                <i class="fas fa-code"></i>
+                <span>Industry Code</span>
+                <i class="expand-icon">&#9660;</i>
+            </div>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <label>NAICS Code</label>
+                    <input type="text" id="txtnaicscode" placeholder="&nbsp;&nbsp;NAICS Code">
 
-                <input type="hidden" id="txtnaicscode-filter-model" name="filters">
-            </div>
-            <div class="filter-option">
-                <label>SIC Code</label>
-                <input type="text" id="txtsiccode" placeholder="&nbsp;&nbsp;SIC Code">
+                    <input type="hidden" id="txtnaicscode-filter-model" name="filters">
+                </div>
+                <div class="filter-option">
+                    <label>SIC Code</label>
+                    <input type="text" id="txtsiccode" placeholder="&nbsp;&nbsp;SIC Code">
 
-                <input type="hidden" id="txtsiccode-filter-model" name="filters">
+                    <input type="hidden" id="txtsiccode-filter-model" name="filters">
+                </div>
             </div>
+            <div class="selected-filters" data-filter="code"></div>
         </div>
-        <div class="selected-filters" data-filter="code"></div>
-    </div>
     </div>
 
     <script src="~/js/script.js"></script>

@@ -433,7 +433,8 @@ function getJsonData() {
         email: $('#txtworkemail-filter-model').val(),
         company_naics_code: companyNaicsCodeValue,
         company_sic_code: companySicCodeValue,
-        PerExportLimit: $('#txtPerExportLimit').val()
+        PerExportLimit: $('#txtPerExportLimit').val(),
+        company_sector: $('#txtSector-filter-model').val()
     };
     console.log('Generated JSON Data:', data); // Debugging
     return data;

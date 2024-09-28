@@ -2,6 +2,7 @@ USE [DBContacts]
 GO
 
 -- Drop tables if they exist
+IF(OBJECT_ID('dbo.vw_ContactCounts', 'V')) IS NOT NULL DROP VIEW dbo.vw_ContactCounts
 IF OBJECT_ID('dbo.Contacts', 'U') IS NOT NULL DROP TABLE dbo.Contacts;
 IF OBJECT_ID('dbo.Companies', 'U') IS NOT NULL DROP TABLE dbo.Companies;
 IF OBJECT_ID('dbo.AccuracyScores', 'U') IS NOT NULL DROP TABLE dbo.AccuracyScores;
@@ -167,6 +168,12 @@ CREATE TABLE [dbo].[SeniorityLevels](
     UNIQUE NONCLUSTERED ([SeniorityLevel] ASC)
 ) ON [PRIMARY]
 GO
+
+CREATE VIEW dbo.vw_ContactCounts
+WITH SCHEMABINDING AS
+SELECT COUNT_BIG(1) AS RecordsTotal
+FROM dbo.Contacts;
+Go
 
 -- Add Foreign Key Constraints
 ALTER TABLE [dbo].[Companies] WITH CHECK ADD CONSTRAINT [FK_Companies_CompanyTypes] FOREIGN KEY([CompanyTypeId])

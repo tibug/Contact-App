@@ -35,8 +35,9 @@ public class ContactRepository : IContactRepository
                 parameters.Add("@SeniorityLevel", seniorityLevelTable.AsTableValuedParameter("dbo.ContactFilterType"));
                 parameters.Add("@LeadDivision", leadDivisionTable.AsTableValuedParameter("dbo.ContactFilterType"));
                 parameters.Add("@EmailScore", emailScoreTable.AsTableValuedParameter("dbo.ContactFilterType"));
-                parameters.Add("@LeadTitles", request.lead_titles);
+                parameters.Add("@LeadTitle", request.lead_titles);
                 parameters.Add("@LeadLocation", request.lead_location);
+                parameters.Add("@CompanySector", request.company_sector);
                 parameters.Add("@Name", request.name);
                 parameters.Add("@Email", request.email);
                 parameters.Add("@CompanyNAICSCode", request.company_naics_code);
@@ -87,8 +88,9 @@ public class ContactRepository : IContactRepository
                 parameters.Add("@RevenueRange", revenueRangeTable.AsTableValuedParameter("dbo.ContactFilterType"));
                 parameters.Add("@SeniorityLevel", seniorityLevelTable.AsTableValuedParameter("dbo.ContactFilterType"));
                 parameters.Add("@LeadDivision", leadDivisionTable.AsTableValuedParameter("dbo.ContactFilterType"));
-                //parameters.Add("@EmailScore", emailScoreTable.AsTableValuedParameter("dbo.ContactFilterType"));
-                parameters.Add("@LeadTitles", request.lead_titles);
+                parameters.Add("@EmailScore", emailScoreTable.AsTableValuedParameter("dbo.ContactFilterType"));
+                parameters.Add("@LeadTitle", request.lead_titles);
+                parameters.Add("@CompanySector", request.company_sector);
                 parameters.Add("@LeadLocation", request.lead_location);
                 parameters.Add("@Name", request.name);
                 parameters.Add("@Email", request.email);

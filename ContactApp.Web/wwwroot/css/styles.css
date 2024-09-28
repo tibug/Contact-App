@@ -413,9 +413,9 @@ td {
     box-sizing: border-box;
 }
 
-#main {
+/*#main {
     width: 100%;
-}
+}*/
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -747,11 +747,6 @@ a {
     overflow-y: auto;
 }
 
-.main-content {
-    flex: 1;
-    padding: 0px;
-}
-
 .modal-dialog {
     max-width: 600px;
 }
@@ -766,8 +761,6 @@ a {
 }
 
 #main {
-    /* overflow: scroll; */ /* Always show scrollbars */
-    max-width: 100%; /* Adjust width as needed */
     height: 800px;
 }
 
@@ -780,6 +773,7 @@ html, body {
     flex-grow: 1; /* Takes up the remaining space on the right side */
     background-color: #fff; /* Optional: background color for the main content */
     padding: 20px;
+    margin-left: auto;
 }
 
 .footer {
@@ -790,37 +784,37 @@ html, body {
 
 /*.table-responsive {
     max-height: 500px;*/ /* Set a maximum height for vertical scrolling */
-    /*overflow-y: auto;*/ /* Enable vertical scrolling */
-    /*overflow-x: auto;*/ /* Enable horizontal scrolling */
+/*overflow-y: auto;*/ /* Enable vertical scrolling */
+/*overflow-x: auto;*/ /* Enable horizontal scrolling */
 /*}
 
 .table {
     width: 100%;*/ /* Ensure table takes full width of container */
-    /*min-width: 800px;*/ /* Set a minimum width for horizontal scrolling */
+/*min-width: 800px;*/ /* Set a minimum width for horizontal scrolling */
 /*}*/
 .container {
-        display: flex;
-        flex-direction: row;
-        margin: 20px;
-    }
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+}
 
-    .sidebar {
-        width: 250px; /* Adjust width as needed */
-        margin-right: 20px; /* Space between sidebar and table */
-    }
+.sidebar {
+    width: 250px; /* Adjust width as needed */
+    margin-right: 20px; /* Space between sidebar and table */
+}
 
-    .table-responsive {
-        flex: 1; /* Take up remaining space */
-        max-height: 500px; /* Set a maximum height for vertical scrolling */
-        overflow-y: auto; /* Enable vertical scrolling */
-        overflow-x: auto; /* Enable horizontal scrolling */
-    }
+.table-responsive {
+    flex: 1; /* Take up remaining space */
+    max-height: 500px; /* Set a maximum height for vertical scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: auto; /* Enable horizontal scrolling */
+}
 
-    .table {
-        width: 100%; /* Ensure table takes full width of container */
-        min-width: 800px; /* Set a minimum width for horizontal scrolling */
-    }
+.table {
+    width: 100%; /* Ensure table takes full width of container */
+    min-width: 800px; /* Set a minimum width for horizontal scrolling */
+}
 
-    .sidebar-filter {
-        margin-bottom: 20px; /* Space between sidebar filters */
-    }
+.sidebar-filter {
+    margin-bottom: 20px; /* Space between sidebar filters */
+}
