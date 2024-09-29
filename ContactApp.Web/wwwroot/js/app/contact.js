@@ -125,18 +125,15 @@
             }
         }
         $('#btnsearch').html('<i class="bi bi-search"></i> Wait...');
-        var jsonData = getJsonData();
-        console.log('Sending Data:', jsonData); // Debugging
-        dataTable.ajax.reload(null, false); // false to keep pagination
-
-        // Update the AJAX `data` function to pass the custom search data
+        dataTable.ajax.reload(null, false);
         dataTable.settings()[0].ajax.data = function (data) {
+            var jsonData = getJsonData();
             var requestData = {
-                ...data,       // Default DataTables parameters
-                ...jsonData    // Your custom filters
+                ...data,
+                ...jsonData
             };
-            console.log('Request Data:', requestData); // Debugging
-            return JSON.stringify(requestData); // Send the merged data
+            console.log('Request Data:', requestData);
+            return JSON.stringify(requestData);
         };
 
         $('#btnsearch').html('<i class="bi bi-search"></i> Search');
@@ -180,9 +177,12 @@ function initializeDataTable() {
             type: 'POST',
             contentType: 'application/json',
             data: function (data) {
+                var requestData = null;
                 var customData = getJsonData();
+                console.log('customData:', customData); // Debugging
+                console.log('data:', data); // Debugging
                 data.pageLimit = 50; // Pass the page limit to the server
-                var requestData = {
+                requestData = {
                     ...data, // Default DataTables parameters
                     ...customData // Your custom filters
                 };
@@ -412,31 +412,30 @@ function initializeDataTable() {
 }
 
 function getJsonData() {
-    var txtCompanyNaicsCode = $('#txtnaicscode-filter-model').val();
+    var txtCompanyNaicsCode = $('#txtnaicscode').val();
     var companyNaicsCodeValue = txtCompanyNaicsCode ? parseInt(txtCompanyNaicsCode, 10) : null;
 
-    var txtCompanySicCode = $('#txtsiccode-filter-model').val();
+    var txtCompanySicCode = $('#txtsiccode').val();
     var companySicCodeValue = txtCompanySicCode ? parseInt(txtCompanySicCode, 10) : null;
 
     var data = {
-        company_name: $('#txtcompany-filter-model').val(),
-        keyword: $('#txtkeyword-filter-model').val(),
-        company_industry: getCheckedValues('heading'),
-        company_size: getCheckedValues('selectAllcompanysize'),
-        revenue_range: getCheckedValues('selectAllrevenue'),
-        seniority_level: getCheckedValues('selectAlllevel'),
-        lead_division: getCheckedValues('departjob'),
-        email_score: getCheckedValues('selectAllemalscore'),
-        lead_titles: $('#txtjobtitle-filter-model').val(),
-        lead_location: $('#txtleadlocation-filter-model').val(),
-        name: $('#txtname-filter-model').val(),
-        email: $('#txtworkemail-filter-model').val(),
+        company_name: $('#txtcompany').val(),
+        keyword: $('#txtkeyword').val(),
+        company_industry: getCheckedValues('select-company-industry'),
+        company_size: getCheckedValues('select-company-size'),
+        revenue_range: getCheckedValues('select-revenue-size'),
+        seniority_level: getCheckedValues('select-seniority-level'),
+        lead_division: getCheckedValues('select-department'),
+        email_score: getCheckedValues('select-accuracy-score'),
+        lead_titles: $('#txtjobtitle').val(),
+        lead_location: $('#txtleadlocation').val(),
+        name: $('#txtname').val(),
+        email: $('#txtworkemail').val(),
         company_naics_code: companyNaicsCodeValue,
         company_sic_code: companySicCodeValue,
         PerExportLimit: $('#txtPerExportLimit').val(),
-        company_sector: $('#txtSector-filter-model').val()
+        company_sector: $('#txtSector').val()
     };
-    console.log('Generated JSON Data:', data); // Debugging
     return data;
 }
 
@@ -444,9 +443,9 @@ function getCheckedValues(className) {
     var selectedValues = [];
     $('.' + className + ':checked').each(function () {
         var value = $(this).val();
-        console.log('Checkbox Value:', value); // Log to verify
+        console.log('Checkbox Value:', value);
         if (value) {
-            selectedValues.push(value); // Add value if it's not null or empty
+            selectedValues.push(value);
         }
     });
     return selectedValues;

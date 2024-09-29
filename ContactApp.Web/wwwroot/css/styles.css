@@ -12,41 +12,7 @@
 .dropdown {
     position: relative;
     width: 250px;
-    Adjust width as needed margin-top: 20px;
 }
-
-.dropdown2 {
-    position: relative;
-    width: 250px; /* Adjust width as needed */
-    margin-top: 20px;
-}
-
-.dropdown3 {
-    position: relative;
-    width: 250px; /* Adjust width as needed */
-    margin-top: 20px;
-}
-
-.dropdown4 {
-    position: relative;
-    width: 250px; /* Adjust width as needed */
-    margin-top: 20px;
-}
-
-
-.dropdown5 {
-    position: relative;
-    width: 250px; /* Adjust width as needed */
-    margin-top: 20px;
-}
-
-.dropdown6 {
-    position: relative;
-    width: 250px; /* Adjust width as needed */
-    margin-top: 20px;
-}
-
-
 #industrySearch {
     width: 143%;
     padding: 8px;
@@ -63,190 +29,34 @@
         border-color: #007bff;
     }
 
-#industrySearch2 {
-    width: 100%;
+.options-list {
     padding: 8px;
-    margin-bottom: 6px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
+    display: block;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    position: relative; /* Added for toggle icon alignment */
 }
 
-    #industrySearch2:focus {
-        border-color: #007bff;
+    .options-list:hover {
+        background-color: #f0f0f0;
     }
 
-#industrySearch3 {
-    width: 143%;
-    padding: 8px;
-    margin-bottom: 6px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
-}
-
-    #industrySearch3:focus {
-        border-color: #007bff;
-    }
-
-#industrySearch4 {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 6px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
-}
-
-    #industrySearch4:focus {
-        border-color: #007bff;
-    }
-
-
-#industrySearch5 {
-    width: 143%;
-    padding: 8px;
-    margin-bottom: 6px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
-}
-
-    #industrySearch5:focus {
-        border-color: #007bff;
-    }
-
-
-#industrySearch6 {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 6px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
-}
-
-    #industrySearch6:focus {
-        border-color: #007bff;
-    }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    top: 50px;
+    top: 60px;
     left: 0;
-    width: 142%;
+    width: 92%;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-height: 200px;
-    Reduced;
     overflow-y: auto;
     z-index: 1000;
     transition: all 0.3s ease-in-out;
 }
-
-.dropdown-content2 {
-    display: none;
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 200px;
-    Reduced;
-    overflow-y: auto;
-    z-index: 1000;
-    transition: all 0.3s ease-in-out;
-}
-
-.dropdown-content3 {
-    display: none;
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 141% !important;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 200px;
-    Reduced;
-    overflow-y: auto;
-    z-index: 1000;
-    transition: all 0.3s ease-in-out;
-}
-
-.dropdown-content4 {
-    display: none;
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 200px;
-    Reduced;
-    overflow-y: auto;
-    z-index: 1000;
-    transition: all 0.3s ease-in-out;
-}
-
-.dropdown-content5 {
-    display: none;
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 141%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 200px;
-    Reduced;
-    overflow-y: auto;
-    z-index: 1000;
-    transition: all 0.3s ease-in-out;
-}
-
-.dropdown-content6 {
-    display: none;
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 200px;
-    Reduced;
-    overflow-y: auto;
-    z-index: 1000;
-    transition: all 0.3s ease-in-out;
-}
-
 .industry {
     padding: 8px;
     display: block;
@@ -281,18 +91,6 @@
 }
 
     .industry3:hover {
-        background-color: #f0f0f0;
-    }
-
-.industry4 {
-    padding: 8px;
-    display: block;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
-    position: relative; /* Added for toggle icon alignment */
-}
-
-    .industry4:hover {
         background-color: #f0f0f0;
     }
 
