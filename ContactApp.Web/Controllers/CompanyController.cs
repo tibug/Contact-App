@@ -50,4 +50,12 @@ public class CompanyController : Controller
             return StatusCode(500, "An internal server error occurred.");
         }
     }
+
+    public ActionResult RedirectToContactFilter(int seniorityLevelId, string companyName)
+    {
+        TempData["CompanyName"] = companyName;
+        TempData["SeniorityLevelId"] = seniorityLevelId;
+
+        return RedirectToAction("Index", "ContactFilter");
+    }
 }

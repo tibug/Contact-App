@@ -95,63 +95,63 @@
                             <div class="job-level">
                                 @if ((Model.TotalNonManager ?? 0) > 0)
                                 {
-                                    <a href="javascript:void(0);" onclick="redirectToContactFilter([@(Model.SeniorityLevelNonManagerId != null ? Model.SeniorityLevelNonManagerId : 0)], '@Model.CompanyName')">
-                                        <span>C-Level</span>
+                                    <a href="@Url.Action("RedirectToContactFilter", "Company", new {seniorityLevelId = Model.SeniorityLevelNonManagerId, companyName = Model.CompanyName })">
+                                        <span>Non-Manager</span>
                                         <strong>@(Model.TotalNonManager ?? 0)</strong>
                                     </a>
                                 }
                                 else
                                 {
-                                    <span>C-Level</span>
+                                    <span>Non-Manager</span>
                                     <strong>@(Model.TotalNonManager ?? 0)</strong>
                                 }
                             </div>
                             <div class="job-level">
                                 @if ((Model.TotalManagers ?? 0) > 0)
                                 {
-                                    <a href="javascript:void(0);" onclick="redirectToContactFilter([@(Model.SeniorityLevelManagerId != null ? Model.SeniorityLevelManagerId : 0)], '@Model.CompanyName')">
-                                        <span>C-Level</span>
+                                    <a href="@Url.Action("RedirectToContactFilter", "Company", new {seniorityLevelId = Model.SeniorityLevelManagerId, companyName = Model.CompanyName })">
+                                        <span>Manager</span>
                                         <strong>@(Model.TotalManagers ?? 0)</strong>
                                     </a>
                                 }
                                 else
                                 {
-                                    <span>C-Level</span>
+                                    <span>Manager</span>
                                     <strong>@(Model.TotalManagers ?? 0)</strong>
                                 }
                             </div>
                             <div class="job-level">
                                 @if ((Model.TotalDirectors ?? 0) > 0)
                                 {
-                                    <a href="javascript:void(0);" onclick="redirectToContactFilter([@(Model.SeniorityLevelDirectorId != null ? Model.SeniorityLevelDirectorId : 0)], '@Model.CompanyName')">
-                                        <span>C-Level</span>
+                                    <a href="@Url.Action("RedirectToContactFilter", "Company", new {seniorityLevelId = Model.SeniorityLevelDirectorId, companyName = Model.CompanyName })">
+                                        <span>Director</span>
                                         <strong>@(Model.TotalDirectors ?? 0)</strong>
                                     </a>
                                 }
                                 else
                                 {
-                                    <span>C-Level</span>
+                                    <span>Director</span>
                                     <strong>@(Model.TotalDirectors ?? 0)</strong>
                                 }
                             </div>
                             <div class="job-level">
                                 @if ((Model.TotalVPLevel ?? 0) > 0)
                                 {
-                                    <a href="javascript:void(0);" onclick="redirectToContactFilter([@(Model.SeniorityLevelVPId != null ? Model.SeniorityLevelVPId : 0)], '@Model.CompanyName')">
-                                        <span>C-Level</span>
+                                    <a href="@Url.Action("RedirectToContactFilter", "Company", new {seniorityLevelId = Model.SeniorityLevelVPId, companyName = Model.CompanyName })">
+                                        <span>VP-Level</span>
                                         <strong>@(Model.TotalVPLevel ?? 0)</strong>
                                     </a>
                                 }
                                 else
                                 {
-                                    <span>C-Level</span>
+                                    <span>VP-Level</span>
                                     <strong>@(Model.TotalVPLevel ?? 0)</strong>
                                 }
                             </div>
                             <div class="job-level">
                                 @if ((Model.TotalCLevel ?? 0) > 0)
                                 {
-                                    <a href="javascript:void(0);" onclick="redirectToContactFilter([@(Model.SeniorityLevelCLevelId != null ? Model.SeniorityLevelCLevelId : 0)], '@Model.CompanyName')">
+                                    <a href="@Url.Action("RedirectToContactFilter", "Company", new {seniorityLevelId = Model.SeniorityLevelCLevelId, companyName = Model.CompanyName })">
                                         <span>C-Level</span>
                                         <strong>@(Model.TotalCLevel ?? 0)</strong>
                                     </a>
@@ -234,12 +234,3 @@
     </div>
 </body>
 </html>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-
-    function redirectToContactFilter(seniorityLevelId, companyName) {
-        const url = `/ContactFilter/index?companyName=${encodeURIComponent(companyName)}&seniorityLevel=${seniorityLevelId}`;
-        window.location.href = url;
-    }
-
-</script>
