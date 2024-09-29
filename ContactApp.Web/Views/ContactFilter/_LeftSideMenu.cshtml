@@ -81,18 +81,18 @@
             }
 
         /*         .filter-options {
-                                                                                                                                                                                                                                                                                                                            display: none;
-                                                                                                                                                                                                                                                                                                                            padding: 12px 0;
-                                                                                                                                                                                                                                                                                                                            margin-top: 8px;
-                                                                                                                                                                                                                                                                                                                            border-left: 4px solid #007bff;
-                                                                                                                                                                                                                                                                                                                            padding-left: 16px;
-                                                                                                                                                                                                                                                                                                                            background-color: #f9f9f9;
-                                                                                                                                                                                                                                                                                                                            border-radius: 8px;
-                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                    display: none;
+                                                                                                                                                                                                                                                                                                                                                                                                    padding: 12px 0;
+                                                                                                                                                                                                                                                                                                                                                                                                    margin-top: 8px;
+                                                                                                                                                                                                                                                                                                                                                                                                    border-left: 4px solid #007bff;
+                                                                                                                                                                                                                                                                                                                                                                                                    padding-left: 16px;
+                                                                                                                                                                                                                                                                                                                                                                                                    background-color: #f9f9f9;
+                                                                                                                                                                                                                                                                                                                                                                                                    border-radius: 8px;
+                                                                                                                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                                                                                                                                            .filter-options.active {
-                                                                                                                                                                                                                                                                                                                                display: block;
-                                                                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                                                                                                    .filter-options.active {
+                                                                                                                                                                                                                                                                                                                                                                                                        display: block;
+                                                                                                                                                                                                                                                                                                                                                                                                    } */
 
         .filter-option {
             margin: 8px 0;
@@ -180,10 +180,10 @@
 
         /* Optional: Add styles for the Select All checkbox */
         /* #selectAllcompanysize, #AgricultureCheckbox, #Software22Checkbox, #Software20Checkbox, #Software18Checkbox, #Software1Checkbox, #Retail1Checkbox, #Real1Checkbox, #Organizations1Checkbox, #SoftwareCheckbox, #RetailCheckbox, #MineralsCheckbox, #MediaCheckbox, #ManufacturingCheckbox, #HospitalsCheckbox, #HospitalityCheckbox, #ConglomeratesCheckbox, #HealthcareCheckbox, #GovernmentCheckbox, #FinanceTempCheckbox, #EnergyCheckbox, #EducationCheckbox, #ConsumerCheckbox, #ConstructionCheckbox, #BusinessCheckbox, #CSuiteCheckbox, #EngineeringCheckbox {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    width: 16px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    height: 16px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-right: 8px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            width: 16px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 16px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 8px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
 
         .forminput {
             width: 15px !important;
@@ -342,60 +342,63 @@
             </div>
             <div id="departmentCollapse" class="collapse filter-options">
                 <div class="filter-option">
-                    <div class="dropdown">
-                        <div class="form-group has-search">
-                            <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text" id="txtSearchDepartment" class="form-control" placeholder="Search Department" onfocus="showDropdown(this)" onkeyup="filterOptions(this)" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="dropdown-menu options-list">
-                                @if (ViewBag.JobCategories != null)
-                                {
-                                    var jobCategories = ViewBag.JobCategories as List<JobCategory>;
+                    <label>Job Department</label>
+                    <div class="form-group has-search">
+                        <span class="fa fa-search form-control-feedback"></span>
+                        <input type="text" id="txtSearchDepartment" class="form-control" placeholder="Search Department" onfocus="showDropdown(this)" onkeyup="filterOptions(this)" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="dropdown-menu options-list">
+                            <ul class="list-group" id="jobList">
+                                <li class="list-group-item" onclick="toggleAllCheckboxes(this);event.stopPropagation();">
+                                    <div class="form-check">
+                                        <input class="form-check-input select-all" type="checkbox">
+                                        <label class="form-check-label">Select All</label>
+                                    </div>
+                                </li>
 
-                                    if (jobCategories != null)
+                                @if (ViewBag.JobCategories is List<JobCategory> jobCategories && jobCategories.Any())
+                                {
+                                    @foreach (var category in jobCategories)
                                     {
-                                        @foreach (var category in ViewBag.jobCategories)
-                                        {
-                                            var sanitizedCategoryName = category.CategoryName
-                                            .Replace(" ", "")
-                                            .Replace("-", "")
-                                            .ToLower();
-                                            <input type="checkbox"
-                                                   id="@sanitizedCategoryName-Checkbox"
-                                                   onchange="syncSubcategories('@sanitizedCategoryName-Subcategories', this)">
-                                            <span class="toggle-icon"
-                                                  id="@sanitizedCategoryName-ToggleIcon"
-                                                  onclick="toggleSubcategories('@sanitizedCategoryName-Subcategories', '@sanitizedCategoryName-ToggleIcon')">›</span>
-                                            <label for="@sanitizedCategoryName-Checkbox"
-                                                   class="industry-label"
-                                                   onclick="toggleSubcategories('@sanitizedCategoryName-Subcategories', '@sanitizedCategoryName-ToggleIcon')">
-                                                @category.CategoryName
-                                            </label>
-                                            <div class="subcategories" id="@sanitizedCategoryName-Subcategories">
-                                                @{
-                                                    int index = 1;
-                                                }
-                                                @foreach (var title in category.Titles)
+                                        var sanitizedCategoryName = category.CategoryName.Replace(" ", "").Replace("-", "").ToLower();
+                                        <li class="list-group-item checkbox-item" onclick="toggleSubcategories(this);event.stopPropagation();">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input parent-checkbox"
+                                                       id="@sanitizedCategoryName-Checkbox">
+                                                <span class="toggle-icon"
+                                                      id="@sanitizedCategoryName-ToggleIcon"
+                                                      data-toggle-id="@sanitizedCategoryName-Subcategories"
+                                                      onclick="toggleSubcategories(this)">&#8250;</span>
+                                                <label for="@sanitizedCategoryName-Checkbox"
+                                                       class="form-check-label"
+                                                       onclick="toggleSubcategories(this)">
+                                                    @category.CategoryName
+                                                </label>
+                                                @if (category.Titles?.Any() == true)
                                                 {
-                                                    <div class="form-check">
-                                                        <input class="form-check-input child-checkbox forminput subcategory-checkbox departjob@(index) departjob"
-                                                               type="checkbox"
-                                                               id="@($"jobCategories-{title.Id}")"
-                                                               value="@title.Id">
-                                                        <label class="form-check-label"
-                                                               for="@($"jobCategories-{title.Id}")">
-                                                            @title.Division
-                                                        </label>
-                                                    </div>
-                                                    index++;
+                                                    <ul class="list-group subcategories" id="@sanitizedCategoryName-Subcategories" style="display: none;">
+                                                        @foreach (var title in category.Titles)
+                                                        {
+                                                            <li class="list-group-item">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input child-checkbox select-department"
+                                                                           type="checkbox"
+                                                                           id="@($"jobCategories-{title.Id}")"
+                                                                           value="@title.Id">
+                                                                    <label class="form-check-label"
+                                                                           for="@($"jobCategories-{title.Id}")">
+                                                                        @title.Division
+                                                                    </label>
+                                                                </div>
+                                                            </li>
+                                                        }
+                                                    </ul>
                                                 }
                                             </div>
-
-                                        }
+                                        </li>
                                     }
                                 }
-                            </div>
+                            </ul>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -546,11 +549,10 @@
                                     @foreach (var category in companyIndustries)
                                     {
                                         var sanitizedCategoryName = category.CategoryName.Replace(" ", "").Replace("-", "").ToLower();
-                                        <li class="list-group-item checkbox-item" onclick="updateSelectedFilters(this);event.stopPropagation();">
+                                        <li class="list-group-item checkbox-item" onclick="toggleSubcategories(this);event.stopPropagation();">
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input parent-checkbox"
-                                                       id="@sanitizedCategoryName-Checkbox"
-                                                       onchange="toggleSubcategoryCheckboxes(this)">
+                                                       id="@sanitizedCategoryName-Checkbox">
                                                 <span class="toggle-icon"
                                                       id="@sanitizedCategoryName-ToggleIcon"
                                                       data-toggle-id="@sanitizedCategoryName-Subcategories"
@@ -569,7 +571,7 @@
                                                             <li class="list-group-item">
                                                                 <div class="form-check">
                                                                     <!-- Child Checkbox -->
-                                                                    <input class="form-check-input child-checkbox subcategory-checkbox" type="checkbox" id="@sanitizedIndustries" value="@title.Id">
+                                                                    <input class="form-check-input child-checkbox select-company-industry" type="checkbox" id="@sanitizedIndustries" value="@title.Id">
                                                                     <label class="form-check-label" for="@sanitizedIndustries">
                                                                         @title.CompanyIndustry
                                                                     </label>

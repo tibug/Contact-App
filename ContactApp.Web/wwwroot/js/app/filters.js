@@ -59,29 +59,24 @@ function filterOptions(inputElement) {
         }
     }
 }
-
-//function toggleAllCheckboxes(selectAllCheckbox) {
-//    const allCheckboxes = selectAllCheckbox.closest('.options-list').querySelectorAll('.child-checkbox, .parent-checkbox');
-//    allCheckboxes.forEach(function (checkbox) {
-//        checkbox.checked = selectAllCheckbox.checked;
-//    });
-//}
-
-function toggleSubcategoryCheckboxes(parentCheckbox) {
-    const subcategoryCheckboxes = parentCheckbox.closest('.list-group-item').querySelectorAll('.child-checkbox');
-    subcategoryCheckboxes.forEach(function (checkbox) {
-        checkbox.checked = parentCheckbox.checked;
-    });
-}
 function toggleSubcategories(element) {
-    const toggleId = element.getAttribute('data-toggle-id');
-    const subcategories = document.getElementById(toggleId);
+    const parentCheckbox = element.closest('.checkbox-item').querySelector('.parent-checkbox');
+    const subcategories = element.closest('.checkbox-item').querySelector('.subcategories');
+
+    // Toggle visibility of subcategories
     if (subcategories) {
-        const isVisible = subcategories.style.display === 'block';
-        subcategories.style.display = isVisible ? 'none' : 'block';
-        const icon = element.querySelector('.toggle-icon');
-        icon.innerHTML = isVisible ? '&#8250;' : '&#8254;';
+        subcategories.style.display = parentCheckbox.checked ? 'block' : 'none';
     }
+
+    // Check/uncheck child checkboxes based on parent checkbox
+    const childCheckboxes = subcategories.querySelectorAll('.child-checkbox');
+    childCheckboxes.forEach(childCheckbox => {
+        childCheckbox.checked = parentCheckbox.checked;
+    });
+
+    // Update toggle icon
+    const icon = element.querySelector('.toggle-icon');
+    icon.innerHTML = parentCheckbox.checked ? '&#8254;' : '&#8250;';
 }
 
 function toggleAllCheckboxes(selectAllCheckbox) {
@@ -97,6 +92,14 @@ function toggleAllCheckboxes(selectAllCheckbox) {
             checkbox.checked = shouldCheck;
             updateSelectedFilters(checkboxItem, false);
         }
+        const subcategories = checkboxItem.closest('.checkbox-item').querySelector('.subcategories');
+        if (subcategories) {
+            const childCheckboxes = subcategories.querySelectorAll('.child-checkbox');
+            childCheckboxes.forEach(childCheckbox => {
+                childCheckbox.checked = shouldCheck;
+            });
+        }
+
     });
 }
 function updateSelectedFilters(checkboxItem, toggleState = true) {
