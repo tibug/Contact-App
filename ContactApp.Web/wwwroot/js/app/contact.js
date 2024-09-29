@@ -39,6 +39,7 @@
                 var limitavailable = xhr.getResponseHeader('limitavailable');
                 var perlimitavailable = xhr.getResponseHeader('perlimitavailable');
                 var remdata = xhr.getResponseHeader('remval');
+                var time = xhr.getResponseHeader('resetTime');
                 if (remdata == '') {
                     $('#txtrem').val('0');
                 } else {
@@ -51,7 +52,7 @@
                     saveAs(blob, filename);
                 }
                 if (limitavailable == "N") {
-                    toastr.error('You’ve reached your daily export. Please Upgrade your plan.');
+                    toastr.error(`You’ve reached your daily export. Please Upgrade your plan. Your limit will reset on ${resetTime}`);
                     $('#btnfinalexport').html('<i class="bi bi-file-earmark-spreadsheet-fill"></i> Excel');
                     hideModal();
                     return false;

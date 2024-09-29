@@ -352,8 +352,8 @@ public class ContactFilterController : Controller
 
             if (AllSearchLimit3 >= searchlimit2 + 1)
             {
-
-                _notyfService.Error("You’ve reached your daily export. Please Upgrade your plansss.");
+                string resetTime = DateTime.Now.ToString("MMM dd hh:mm tt");
+                _notyfService.Error($"You’ve reached your daily export. Please Upgrade your plan. Your limit will reset on {resetTime}");
 
             }
         }
@@ -373,6 +373,9 @@ public class ContactFilterController : Controller
         }
         try
         {
+            if (request.Draw >= 50)
+                request.Draw = 50;
+
             // Ensure the user is authenticated
             if (!(User.Identity is ClaimsIdentity identity))
             {
@@ -409,6 +412,7 @@ public class ContactFilterController : Controller
             // Check if the search limit has been reached
             if (allSearchLimitToday > searchLimit)
             {
+                Response.Headers.Add("resetTime", Convert.ToString(DateTime.Today));
                 _logger.LogInformation($"Search limit reached for user {email}. Limit: {searchLimit}, Current: {allSearchLimitToday}");
                 return Json(new { message = "Search limit reached" });
             }
@@ -417,7 +421,7 @@ public class ContactFilterController : Controller
             (int recordsTotal, int recordsFiltered, IEnumerable<ContactDto> contacts) = await _contactRepository.GetContactsAsync(request);
 
             // Update search limit if necessary
-            if (ispageload == 0 && allSearchLimitToday < searchLimit + 1)
+            if (allSearchLimitToday < searchLimit + 1)
             {
                 _db.tblSearchlimit.Add(new SearchLimit
                 {
