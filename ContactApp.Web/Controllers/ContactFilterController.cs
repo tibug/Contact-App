@@ -352,7 +352,7 @@ public class ContactFilterController : Controller
 
             if (AllSearchLimit3 >= searchlimit2 + 1)
             {
-                string resetTime = DateTime.Now.ToString("MMM dd hh:mm tt");
+                string resetTime = DateTime.Now.AddDays(1).ToString("MMM dd hh:mm tt");
                 _notyfService.Error($"You’ve reached your daily export. Please Upgrade your plan. Your limit will reset on {resetTime}");
 
             }
