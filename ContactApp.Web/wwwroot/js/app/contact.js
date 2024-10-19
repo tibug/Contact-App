@@ -257,26 +257,26 @@ function initializeDataTable() {
             }
         ],
         "drawCallback": function (settings) {
-            var api = this.api();
-            var info = api.page.info();
-            var pages = Math.ceil(info.recordsTotal / info.length);
-            var currentPage = info.page + 1;
+            //var api = this.api();
+            //var info = api.page.info();
+            //var pages = Math.ceil(info.recordsTotal / info.length);
+            //var currentPage = info.page + 1;
 
-            // Cache jQuery selectors
-            var $nextButton = $('.paginate_button.next');
-            var $lastButton = $('.paginate_button.last');
+            //// Cache jQuery selectors
+            //var $nextButton = $('.paginate_button.next');
+            //var $lastButton = $('.paginate_button.last');
 
-            // Initialize button states
-            resetButtonStates($nextButton, $lastButton);
+            //// Initialize button states
+            //resetButtonStates($nextButton, $lastButton);
 
-            // Handle button states
-            handleButtonStates($nextButton, $lastButton, currentPage, pages);
+            //// Handle button states
+            //handleButtonStates($nextButton, $lastButton, currentPage, pages);
 
-            // Set up button click events
-            setupButtonClickEvents($nextButton, $lastButton, api, currentPage, pages);
+            //// Set up button click events
+            //setupButtonClickEvents($nextButton, $lastButton, api, currentPage, pages);
 
-            // Disable page buttons beyond 50
-            disableExtraPaginationButtons(pages);
+            //// Disable page buttons beyond 50
+            //disableExtraPaginationButtons(pages);
         }
     });
 

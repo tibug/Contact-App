@@ -25,7 +25,6 @@ builder.Services.AddCors(options =>
         builder => builder.WithOrigins("https://raw.githubusercontent.com"));
 });
 
-
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
 {
     option.LoginPath = "/login/Index";
