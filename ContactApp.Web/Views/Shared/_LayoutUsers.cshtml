@@ -1,7 +1,9 @@
 ﻿@using System.Security.Claims;
 @{
     string userEmail = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Email, StringComparison.OrdinalIgnoreCase)).Value;
+
     string PerExportLimit = ViewContext.HttpContext.Request.Cookies["PerExportLimit"] ?? "0";
+
     string TodayLimit = ViewContext.HttpContext.Request.Cookies[userEmail] ?? "0";
 }
 <!DOCTYPE html>
@@ -16,52 +18,75 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="icon" type="image/x-icon" href="~/images/favicon.ico">
+
     <style>
-        /* Ensure the body has a proper layout and padding */
-        body {
-            font-family: 'Roboto', sans-serif;
+
+        #sidebar {
+            transition: all 0.3s ease; /* Smooth transition */
+            display: none; /* Hidden by default */
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
+            box-sizing: border-box;
         }
 
-        /* Sidebar Styles */
-        .sidebar {
-            width: 250px; /* Adjust width as needed */
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            background-color: #ffffff;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            overflow-y: auto; /* Enable scrolling if the content is too tall */
-            z-index: 1000;
+        /* Remove any space from html and body */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; /* Prevent scrolling on body */
+            overflow-y: hidden !important; /* Prevent scrolling on body */
+            box-sizing: border-box; /* Include padding in height calculations */
         }
 
-        /* Main Content Styles */
-        .main-content {
-            margin-left: 250px; /* Same as the sidebar width */
-            padding: 20px;
-            flex-grow: 1;
+        *, *::before, *::after {
+            box-sizing: inherit; /* Apply box-sizing to all elements */
         }
 
-        /* Ensure the footer is at the bottom */
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 250px; /* Same as the sidebar width */
-            width: calc(100% - 250px); /* Full width minus sidebar width */
-            background-color: #f8f9fa;
-            padding: 10px;
-            box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+        /* Ensure the main content starts without extra margins or padding */
+        main {
+            margin: 0;
+            padding: 0;
+            width: 100%; /* Ensure it takes up full width */
+            min-height: 100vh; /* Full screen height */
         }
 
-        /* Fix table responsiveness and alignment issues */
-        .table-responsive {
-            margin-top: 20px;
+        /* Remove unnecessary margins/padding from containers */
+        .container, .content {
+            margin: 0;
+            padding: 20px; /* Add padding for content if needed */
         }
 
+        /* Handle tables, images, and other content that might overflow */
+        table, img {
+            max-width: 100%; /* Keep tables/images within the viewport */
+            height: auto;
+        }
+
+        /* Ensure no horizontal scrollbar due to columns or grid layout */
+        [class*="col-"] {
+            padding-left: 0;
+            padding-right: 0;
+            margin: 0;
+        }
+
+        /* New styles for small screens */
+        @@media (max-width: 768px) {
+            html, body {
+                overflow-x: auto; /* Enable horizontal scrolling on small screens */
+            }
+
+            main {
+                width: max-content; /* Allow main content to exceed viewport width */
+                padding: 0; /* Remove padding to avoid extra space */
+            }
+        }
     </style>
+
 </head>
 <body>
 

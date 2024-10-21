@@ -9,9 +9,8 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f5f5f5;
+            background-color: #ffffff;
             margin: 0;
-            padding: 20px;
             display: flex;
             justify-content: center;
         }
@@ -81,18 +80,18 @@
             }
 
         /*         .filter-options {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            display: none;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding: 12px 0;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 8px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-left: 4px solid #007bff;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 16px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            background-color: #f9f9f9;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-radius: 8px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            display: none;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding: 12px 0;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 8px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-left: 4px solid #007bff;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 16px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            background-color: #f9f9f9;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-radius: 8px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .filter-options.active {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                display: block;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .filter-options.active {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                display: block;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
 
         .filter-option {
             margin: 8px 0;
@@ -180,10 +179,10 @@
 
         /* Optional: Add styles for the Select All checkbox */
         /* #selectAllcompanysize, #AgricultureCheckbox, #Software22Checkbox, #Software20Checkbox, #Software18Checkbox, #Software1Checkbox, #Retail1Checkbox, #Real1Checkbox, #Organizations1Checkbox, #SoftwareCheckbox, #RetailCheckbox, #MineralsCheckbox, #MediaCheckbox, #ManufacturingCheckbox, #HospitalsCheckbox, #HospitalityCheckbox, #ConglomeratesCheckbox, #HealthcareCheckbox, #GovernmentCheckbox, #FinanceTempCheckbox, #EnergyCheckbox, #EducationCheckbox, #ConsumerCheckbox, #ConstructionCheckbox, #BusinessCheckbox, #CSuiteCheckbox, #EngineeringCheckbox {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    width: 16px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    height: 16px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-right: 8px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    width: 16px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    height: 16px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-right: 8px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
 
         .forminput {
             width: 15px !important;
@@ -244,12 +243,19 @@
                                     </div>
                                 </li>
                                 @if (ViewBag.CompanySizes != null)
+
                                 {
+
                                     var companySizes = ViewBag.CompanySizes as List<CompanySizes>;
+
                                     if (companySizes != null)
+
                                     {
+
                                         foreach (var item in companySizes)
+
                                         {
+
                                             var sanitizedCompanySizeId = $"companysize-{item.Id}";
                                             <li class="list-group-item checkbox-item" onclick="updateSelectedFilters(this);event.stopPropagation();">
                                                 <div class="form-check">
@@ -258,7 +264,9 @@
                                                 </div>
                                             </li>
                                         }
+
                                     }
+
                                 }
                             </ul>
                         </div>
@@ -296,13 +304,21 @@
                                     </div>
                                 </li>
                                 @if (ViewBag.AccuracyScores != null)
+
                                 {
+
                                     var accuracyScores = ViewBag.AccuracyScores as List<AccuracyScore>;
 
+
+
                                     if (accuracyScores != null)
+
                                     {
+
                                         foreach (var item in accuracyScores)
+
                                         {
+
                                             var sanitizedAccuracyScores = $"accuracyScores-{item.Id}";
                                             <li class="list-group-item checkbox-item" onclick="updateSelectedFilters(this);event.stopPropagation();">
                                                 <div class="form-check">
@@ -311,7 +327,9 @@
                                                 </div>
                                             </li>
                                         }
+
                                     }
+
                                 }
                             </ul>
                         </div>
@@ -356,9 +374,12 @@
                                 </li>
 
                                 @if (ViewBag.JobCategories is List<JobCategory> jobCategories && jobCategories.Any())
+
                                 {
                                     @foreach (var category in jobCategories)
+
                                     {
+
                                         var sanitizedCategoryName = category.CategoryName.Replace(" ", "").Replace("-", "").ToLower();
                                         <li class="list-group-item checkbox-item" onclick="toggleSubcategories(this);event.stopPropagation();">
                                             <div class="form-check">
@@ -374,9 +395,11 @@
                                                     @category.CategoryName
                                                 </label>
                                                 @if (category.Titles?.Any() == true)
+
                                                 {
                                                     <ul class="list-group subcategories" id="@sanitizedCategoryName-Subcategories" style="display: none;">
                                                         @foreach (var title in category.Titles)
+
                                                         {
                                                             <li class="list-group-item">
                                                                 <div class="form-check">
@@ -426,15 +449,25 @@
                                     </div>
                                 </li>
                                 @if (ViewBag.Levels != null)
+
                                 {
+
                                     var seniorityLevels = ViewBag.Levels as List<SeniorityLevels>;
 
+
+
                                     if (seniorityLevels != null)
+
                                     {
+
                                         foreach (var item in seniorityLevels)
+
                                         {
+
                                             var isChecked = item.Id == ViewBag.SelectedSeniorityLevel ? "checked" : "";
+
                                             var sanitizedSeniorityLevels = $"seniorityLevels-{item.Id}";
+
                                             var sanitizedcheckboxitem = $"checkboxitem-{item.Id}";
                                             <li class="list-group-item checkbox-item" id="@sanitizedcheckboxitem" onclick="updateSelectedFilters(this);event.stopPropagation();">
                                                 <div class="form-check">
@@ -443,7 +476,9 @@
                                                 </div>
                                             </li>
                                         }
+
                                     }
+
                                 }
                             </ul>
                         </div>
@@ -501,13 +536,21 @@
                                     </div>
                                 </li>
                                 @if (ViewBag.RevenueSizes != null)
+
                                 {
+
                                     var revenueSize = ViewBag.RevenueSizes as List<RevenueSize>;
 
+
+
                                     if (revenueSize != null)
+
                                     {
+
                                         foreach (var item in revenueSize)
+
                                         {
+
                                             var sanitizedRevenueSize = $"revenueSize-{item.Id}";
                                             <li class="list-group-item checkbox-item" onclick="updateSelectedFilters(this);event.stopPropagation();">
                                                 <div class="form-check">
@@ -516,7 +559,9 @@
                                                 </div>
                                             </li>
                                         }
+
                                     }
+
                                 }
                             </ul>
                         </div>
@@ -546,9 +591,12 @@
                                     </div>
                                 </li>
                                 @if (ViewBag.Industries is List<IndustryCategory> companyIndustries && companyIndustries.Any())
+
                                 {
                                     @foreach (var category in companyIndustries)
+
                                     {
+
                                         var sanitizedCategoryName = category.CategoryName.Replace(" ", "").Replace("-", "").ToLower();
                                         <li class="list-group-item checkbox-item" onclick="toggleSubcategories(this);event.stopPropagation();">
                                             <div class="form-check">
@@ -564,10 +612,13 @@
                                                     @category.CategoryName
                                                 </label>
                                                 @if (category.Industries?.Any() == true)
+
                                                 {
                                                     <ul class="list-group subcategories" id="@sanitizedCategoryName-Subcategories" style="display: none;">
                                                         @foreach (var title in category.Industries)
+
                                                         {
+
                                                             var sanitizedIndustries = $"Industries-{title.Id}";
                                                             <li class="list-group-item">
                                                                 <div class="form-check">
@@ -621,6 +672,34 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/app/filters.js"></script>
     <script>
+        // document.querySelectorAll('.filter-header').forEach(header => {
+        //     header.addEventListener('click', function () {
+        //         debugger;
+        //         const target = this.getAttribute('data-bs-target');
+        //         const collapseElement = document.querySelector(target);
+        //         const bsCollapse = new bootstrap.Collapse(collapseElement);
+        //         bsCollapse.toggle(); // Manually toggle collapse
+        //     });
+        // });
+        document.addEventListener('click', function (event) {
+            const filterContainer = document.querySelector('.filter-container'); // The container holding your dropdowns
+            const allDropdowns = document.querySelectorAll('.dropdown-menu');
+
+            // Check if the click is outside the filter-container
+            if (!filterContainer.contains(event.target)) {
+                // Close all dropdowns
+                allDropdowns.forEach(function (dropdownMenu) {
+                    dropdownMenu.classList.remove('show'); // Hide dropdown if clicked outside
+                });
+            }
+
+            // If the click is on the dropdown toggle/input inside the filter-container
+            if (event.target.matches('.dropdown-toggle')) {
+                const dropdownMenu = event.target.nextElementSibling; // Get the associated dropdown menu
+                dropdownMenu.classList.toggle('show'); // Toggle the dropdown visibility
+            }
+        });
+
         updateSelectedSeniorityFilter();
 
         function updateSelectedSeniorityFilter() {
@@ -630,7 +709,7 @@
                 console.log('checkbox ', checkbox);
                 debugger;
                 if (checkbox) {
-                    updateSelectedFilters(checkbox,false);
+                    updateSelectedFilters(checkbox, false);
                 }
             }
         }

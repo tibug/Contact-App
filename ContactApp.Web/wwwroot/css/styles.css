@@ -13,6 +13,7 @@
     position: relative;
     width: 250px;
 }
+
 #industrySearch {
     width: 143%;
     padding: 8px;
@@ -57,6 +58,7 @@
     z-index: 1000;
     transition: all 0.3s ease-in-out;
 }
+
 .industry {
     padding: 8px;
     display: block;
@@ -481,10 +483,10 @@ a {
 
 
 .truncate {
-    max-width: 150px; /* Adjust width as needed */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    max-width: 150px !important; /* Adjust width as needed */
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
 }
 
 

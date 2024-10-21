@@ -147,25 +147,6 @@ function getCheckedValues(className) {
     return selectedValues;
 }
 
-function updateModel(id) {
-    const selectedCheckboxes = Array.from(document.querySelectorAll('.filter-category .filter-options .form-check-input:checked'));
-    const checkboxValues = selectedCheckboxes.map(checkbox => {
-        const label = document.querySelector(`label[for="${checkbox.id}"]`).textContent;
-        return label.trim();
-    });
-
-    const values = [...checkboxValues];
-
-    // Create a comma-separated string of values
-    const modelString = values.join(', ');
-
-    if (id) {
-        const hiddenInput = document.getElementById(id + '-filter-model');
-        if (hiddenInput) {
-            hiddenInput.value = modelString; // Update the relevant textbox value
-        }
-    }
-}
 
 
 //function addFilter(inputElement) {
@@ -285,7 +266,70 @@ function updateModel(id) {
 //    }
 //}
 
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Document is ready.');
 
+    const clearFiltersButton = document.querySelector('.clear-filters');
+    if (clearFiltersButton) {
+        clearFiltersButton.addEventListener('click', () => {
+            console.log('Clear filters button clicked.');
+
+            // Clear selected filters
+            const selectedFilterContainers = document.querySelectorAll('.selected-filters');
+            selectedFilterContainers.forEach(container => {
+                console.log('Clearing container:', container);
+                container.innerHTML = '';
+            });
+
+            // Clear hidden fields
+            const hiddenFields = document.getElementsByName('filters');
+            hiddenFields.forEach(field => {
+                console.log('Clearing hidden field:', field);
+                field.value = '';
+            });
+
+            // Clear checkboxes
+            const checkboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                const checkboxValue = checkbox.value;
+                console.log('Clearing checkbox:', checkboxValue);
+
+                // Remove associated badges
+                const associatedBadge = document.querySelector(`.filter-badge[data-value="${checkboxValue}"]`);
+                if (associatedBadge) {
+                    console.log('Removing associated badge:', associatedBadge);
+                    associatedBadge.remove();
+                }
+            });
+
+            // Update model after clearing filters
+            updateModel();
+        });
+    } else {
+        console.error('Clear filters button not found.');
+    }
+});
+
+function updateModel(id) {
+    debugger;
+    const selectedCheckboxes = Array.from(document.querySelectorAll('.filter-category .filter-options .form-check-input:checked'));
+    const checkboxValues = selectedCheckboxes.map(checkbox => {
+        const label = document.querySelector(`label[for="${checkbox.id}"]`).textContent;
+        return label.trim();
+    });
+
+    const values = [...checkboxValues];
+    const modelString = values.join(', ');
+    console.log('Updated model string:', modelString);
+
+    if (id) {
+        const hiddenInput = document.getElementById(id + '-filter-model');
+        if (hiddenInput) {
+            hiddenInput.value = modelString; // Update the relevant textbox value
+        }
+    }
+}
 
 document.querySelector('.search-btn').addEventListener('click', () => {
     // Process each input text field and add a filter for its value
@@ -410,7 +454,7 @@ function showDropdown() {
     dropdownContent.style.display = "block";
 }
 function hideDropdown(event) {
-    const dropdownContent = document.getElementById("dropdownContent");
+    const dropdownContent = document.getElementById("dropdownContent");   
     const searchBar = document.getElementById("industrySearch");
     if (!dropdownContent.contains(event.target) && !searchBar.contains(event.target)) {
         dropdownContent.style.display = "none";

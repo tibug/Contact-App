@@ -1,5 +1,21 @@
 ﻿$(document).ready(function () {
+
+
+
+
     var dataTable = initializeDataTable();
+    $('#sidebar-toggle-small').click(function () {
+        const navbarCollapse = $('.navbar-collapse');
+
+        // Check if the navbar is currently displayed
+        if (navbarCollapse.css('display') === 'none') {
+            // If it is hidden, show it with !important
+            navbarCollapse.attr('style', 'display: block !important;');
+        } else {
+            // If it is visible, hide it with !important
+            navbarCollapse.attr('style', 'display: none !important;');
+        }
+    });
 
     $('#btnclear').click(function () {
         $('#accordionExample input[type="text"]').val('');
@@ -10,6 +26,9 @@
     $('#btnexport').click(function () {
         showModal();
     });
+    $('#btnexport1').click(function () {
+        showModal();
+    });
     $('.close').click(function () {
         hideModal();
     });
@@ -17,7 +36,6 @@
         var jsonData = getJsonData();
         $('#btnfinalexport').html('<i class="bi bi-file-earmark-spreadsheet-fill"></i> Please wait...')
 
-        debugger;
         var limit = parseInt($('#txtrem').val());
 
         if (limit <= 0) {
@@ -126,32 +144,31 @@
             }
         }
         $('#btnsearch').html('<i class="bi bi-search"></i> Wait...');
-        dataTable.ajax.reload(null, false);
+        var jsonData = getJsonData();
+        console.log('Sending Data:', jsonData); // Debugging
+        dataTable.ajax.reload(null, false); // false to keep pagination
+
+        // Update the AJAX `data` function to pass the custom search data
         dataTable.settings()[0].ajax.data = function (data) {
-            var jsonData = getJsonData();
             var requestData = {
-                ...data,
-                ...jsonData
+                ...data,       // Default DataTables parameters
+                ...jsonData    // Your custom filters
             };
-            console.log('Request Data:', requestData);
-            return JSON.stringify(requestData);
+            console.log('Request Data:', requestData); // Debugging
+            return JSON.stringify(requestData); // Send the merged data
         };
 
         $('#btnsearch').html('<i class="bi bi-search"></i> Search');
     });
-    const sidebarToggle = document.querySelector("#sidebar-toggle");
     const sidebar = document.querySelector("#sidebar");
-    sidebarToggle.addEventListener("click", function () {
-        //document.querySelector("#sidebar").classList.toggle("collapsed");
-        if (sidebar.classList.contains("hidden")) {
-            // If hidden, remove the 'hidden' class to show the sidebar
-            sidebar.classList.remove("hidden");
-            $("#divclear").show();
-        } else {
-            // If not hidden, add the 'hidden' class to hide the sidebar
-            sidebar.classList.add("hidden");
-            $("#divclear").hide();
-        }
+    const toggleButtons = document.querySelectorAll(".navbar-toggle-large, .navbar-toggle-small");
+
+    toggleButtons.forEach(toggle => {
+        toggle.addEventListener("click", function () {
+            const isHidden = sidebar.classList.toggle("hidden");
+            $(".table-responsive").css("width", isHidden ? "100%" : "75%");
+            $("#divclear").toggle(!isHidden);
+        });
     });
 });
 function showModal() {
@@ -165,7 +182,8 @@ function initializeDataTable() {
         searching: false,
         lengthChange: false,
         processing: true,
-        serverSide: true, // Enable server-side processing
+        serverSide: true,
+        fixedHeader: true,
         "dom": '<"top"i>rt<"bottom"p><"clear">',
         "pageLength": 25, // Default page size
         "order": [[5, 'asc']], // Default sort order
@@ -178,12 +196,9 @@ function initializeDataTable() {
             type: 'POST',
             contentType: 'application/json',
             data: function (data) {
-                var requestData = null;
                 var customData = getJsonData();
-                console.log('customData:', customData); // Debugging
-                console.log('data:', data); // Debugging
                 data.pageLimit = 50; // Pass the page limit to the server
-                requestData = {
+                var requestData = {
                     ...data, // Default DataTables parameters
                     ...customData // Your custom filters
                 };
@@ -194,8 +209,10 @@ function initializeDataTable() {
                 var formattedCount = Number(data.recordsFiltered).toLocaleString();
                 if (data.recordsFiltered >= 1000000) {
                     $('#tcount').text('Verified Contacts (1M+)');
+                    $('#tcount1').text('Verified Contacts (1M+)');
                 } else {
                     $('#tcount').text('Verified Contacts (' + formattedCount + ')');
+                    $('#tcount1').text('Verified Contacts (' + formattedCount + ')');
                 }
                 return data.data; // Return the data array for DataTables
             },
@@ -214,11 +231,11 @@ function initializeDataTable() {
                 'data': 'name',
                 "autoWidth": true,
                 "render": function (data, type, row) {
-                    return '<div style="display: flex; align-items: center;">' +
+                    return '<div class="tooltip" data-title="' + data + '" style="display: flex; align-items: center;cursor:pointer;position:relative;opacity:1;text-align:center" >' +
                         '<a href="' + row.linkedInUrl + '" target="_blank">' +
                         '<img src="/images/linkedin.png" alt="LinkedIn" width="25px" height="25px" style="margin-right: 10px;">' +
                         '</a>' +
-                        '<span>' + data + '</span>' +
+                        '<span  class="truncate">' + data + '</span>' +
                         '</div>';
                 }
             },
@@ -235,11 +252,14 @@ function initializeDataTable() {
                     }
                     var imageHtml = imageUrl ? '<img src="' + imageUrl + '" alt="Company Image" class="lazyload" style="width:30px; height:30px; margin-right: 10px;" />' : '';
 
-                    // Create a clickable link that directs to the company page
-                    var companyLink = '<a href="/company/' + row.companyId + '" style="text-decoration: none; color: inherit;">' +
+                    // Create a clickable link with inline hover effects
+                    var companyLink = '<a href="/company/' + row.companyId + '" ' +
+                        'style="text-decoration: none; color: inherit;" ' +
+                        'onmouseover="this.style.color=\'blue\'; this.style.textDecoration=\'underline\';" ' +
+                        'onmouseout="this.style.color=\'inherit\'; this.style.textDecoration=\'none\';">' +
                         '<div style="display: flex; align-items: center;">' +
                         imageHtml +
-                        '<span>' + data + '</span>' +
+                        '<span class="truncate">' + data + '</span>' +
                         '</div>' +
                         '</a>';
 
@@ -250,14 +270,37 @@ function initializeDataTable() {
         ],
         "columnDefs": [
             {
-                targets: '_all',
-                render: function (data) {
-                    return `<div class="truncate" title="${data}">${data || ''}</div>`;
+                targets: '_all',  // Apply to all columns
+                render: function (data, type, row, meta) {
+                    // Skip tooltip for the companyName column
+                    if (meta.col === 4) { // Assuming companyName is in the 5th column (index 4)
+                        return `<div class="truncate" title="${data}" style="display: inline-block; position: relative; cursor: pointer;opacity:1 !important">${data || ''}</div>`;
+                    }
+
+                    // Add a tooltip with Tippy.js for other columns and ensure the data is shown
+                    return `<div class="truncate tooltip" data-title="${data}" style="display: inline-block; position: relative; cursor: pointer;opacity:1 !important">` +
+                        `${data !== null ? data : ''}` +  // Ensure data is displayed
+                        `</div>`;
                 }
             }
         ],
+
         "drawCallback": function (settings) {
-            //var api = this.api();
+            var api = this.api();
+
+            // Initialize Tippy.js for tooltips on all columns
+            tippy('.tooltip', {
+                content(reference) {
+                    return reference.getAttribute('data-title');
+                },
+                onShow(instance) {
+                    // Customize the appearance of the tooltip if needed
+                },
+                placement: 'bottom',
+                theme: 'dark',
+                duration: 100,
+            });
+
             //var info = api.page.info();
             //var pages = Math.ceil(info.recordsTotal / info.length);
             //var currentPage = info.page + 1;
@@ -328,8 +371,34 @@ function initializeDataTable() {
             row.child(format(row.data())).show();
             tr.addClass('shown');
         }
-    });
 
+        //initChildRowTooltips(tr);
+    });
+    function initTooltips() {
+        tippy('.tooltip', {
+            content(reference) {
+                return reference.getAttribute('data-title');
+            },
+            theme: 'dark',
+            duration: 100,
+        });
+    }
+
+    function initChildRowTooltips(parentRow) {
+        // Get the child row
+        const childRow = parentRow.next('tr');
+
+        // Ensure child row tooltips are initialized
+        tippy(childRow.find('.tooltip'), {
+            content(reference) {
+                return reference.getAttribute('data-title');
+            },
+            arrow: true,
+            theme: 'dark',
+            duration: 100,
+            placement: 'bottom', // Adjust placement as needed
+        });
+    }
     // Format function for row details
     function format(data) {
         const description = data.companyDescription || 'Unavailable';
@@ -363,9 +432,9 @@ function initializeDataTable() {
                                                                                         <b>Direct Phone:</b><br>
                                                                                             <span style="font-family: Arial, sans-serif; font-size: 16px; color: black;">${data.workPhone || 'Unavailable'}</span>
                                                                                     </div>
-                                                                                    <div class="tile" style="border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
+                                                                                    <div class="tile tooltip" style="border: 1px solid #ddd; border-radius: 8px; padding: 10px;position: relative; opacity: 10 !important" title="${data.email}">
                                                                                         <b>Work Email:</b><br>
-                                                                                        <span style="font-family: Arial, sans-serif; font-size: 16px; color: black;">
+                                                                                        <span style="font-family: Arial, sans-serif; font-size: 16px; color: black;title="${data}" " >
                                                                                             ${data.email || 'Unavailable'}
                                                                                         </span>
                                                                                         ${emailScore !== 'Unavailable' ?
@@ -402,16 +471,16 @@ function initializeDataTable() {
                                                                                                 ${data.companyFacebookPage ? `&nbsp;&nbsp;&nbsp;<a href="${data.companyFacebookPage}" target="_blank"><i class="fab fa-facebook" style="font-size: 18px;"></i></a>` : ''}
                                                                                                 ${data.companyTwitterPage ? `&nbsp;&nbsp;&nbsp;<a href="${data.companyTwitterPage}" target="_blank"><i class="fab fa-x-twitter" style="font-size: 18px;"></i></a>` : ''}
                                                                                     </div>
-                                                                                    <div class="tile" style="border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
+                                                                                    <div class="tile tooltip" style="border: 1px solid #ddd; border-radius: 8px; padding: 10px;position: relative; opacity: 10 !important;" data-title="${fullDescription}">
                                                                                         <b>Description:</b><br>
-                                                                                        <span class="description-preview" style="color: black;" title="${fullDescription}">${descriptionPreview}</span>
+                                                                                        <span class="description-preview" style="color: black;" title="${fullDescription}" >${descriptionPreview}</span>
                                                                                     </div>
                                                                                 </div>`;
     }
 
+
     return table;
 }
-
 function getJsonData() {
     var txtCompanyNaicsCode = $('#txtnaicscode').val();
     var companyNaicsCodeValue = txtCompanyNaicsCode ? parseInt(txtCompanyNaicsCode, 10) : null;
@@ -437,6 +506,7 @@ function getJsonData() {
         PerExportLimit: $('#txtPerExportLimit').val(),
         company_sector: $('#txtSector').val()
     };
+
     return data;
 }
 
@@ -451,5 +521,4 @@ function getCheckedValues(className) {
     });
     return selectedValues;
 }
-
 
