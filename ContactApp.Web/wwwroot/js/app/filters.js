@@ -159,3 +159,17 @@ function removeTag(tagElement) {
     });
     tagElement.remove();
 }
+document.querySelector('.clear-filters').addEventListener('click', () => {
+    document.querySelectorAll('.selected-filters').forEach(container => container.innerHTML = '');
+    document.querySelectorAll('input[type="text"]').forEach(textbox => {
+        textbox.value = '';
+    });
+    document.querySelectorAll('.dropdown-content input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = false;
+        const checkboxValue = checkbox.value;
+        const associatedBadge = document.querySelector(`.filter-badge[data-value="${checkboxValue}"]`);
+        if (associatedBadge) {
+            associatedBadge.remove();
+        }
+    });
+});

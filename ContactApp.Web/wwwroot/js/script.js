@@ -285,20 +285,7 @@ function updateModel(id) {
 //    }
 //}
 
-document.querySelector('.clear-filters').addEventListener('click', () => {
-    document.querySelectorAll('.selected-filters').forEach(container => container.innerHTML = '');
-    const hiddenFields = document.getElementsByName('filters');
-    hiddenFields.forEach(field => field.value = '');
-    document.querySelectorAll('.dropdown-content input[type="checkbox"]').forEach(checkbox => {
-        checkbox.checked = false;
-        const checkboxValue = checkbox.value;
-        const associatedBadge = document.querySelector(`.filter-badge[data-value="${checkboxValue}"]`);
-        if (associatedBadge) {
-            associatedBadge.remove();
-        }
-    });
-    updateModel();
-});
+
 
 document.querySelector('.search-btn').addEventListener('click', () => {
     // Process each input text field and add a filter for its value
@@ -423,7 +410,7 @@ function showDropdown() {
     dropdownContent.style.display = "block";
 }
 function hideDropdown(event) {
-    const dropdownContent = document.getElementById("dropdownContent");   
+    const dropdownContent = document.getElementById("dropdownContent");
     const searchBar = document.getElementById("industrySearch");
     if (!dropdownContent.contains(event.target) && !searchBar.contains(event.target)) {
         dropdownContent.style.display = "none";
