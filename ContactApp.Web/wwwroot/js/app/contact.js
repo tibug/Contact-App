@@ -205,17 +205,25 @@ function initializeDataTable() {
                 console.log('Request Data:', requestData); // Debugging
                 return JSON.stringify(requestData); // Serialize combined data
             },
-            dataSrc: function (data) {
-                var formattedCount = Number(data.recordsFiltered).toLocaleString();
-                if (data.recordsFiltered >= 1000000) {
-                    $('#tcount').text('Verified Contacts (1M+)');
-                    $('#tcount1').text('Verified Contacts (1M+)');
-                } else {
-                    $('#tcount').text('Verified Contacts (' + formattedCount + ')');
-                    $('#tcount1').text('Verified Contacts (' + formattedCount + ')');
-                }
-                return data.data; // Return the data array for DataTables
-            },
+dataSrc: function (data) {
+    var formattedCount = Number(data.recordsFiltered).toLocaleString();
+    var label = 'Verified Contacts ('; // Base label
+
+    if (data.recordsFiltered >= 1000000) {
+        // Calculate millions
+        var millions = Math.floor(data.recordsFiltered / 1000000);
+        label += millions + 'M+';
+    } else {
+        label += formattedCount; // For counts less than 1 million
+    }
+    
+    label += ')';
+    
+    $('#tcount').text(label);
+    $('#tcount1').text(label);
+    
+    return data.data; // Return the data array for DataTables
+},
             beforeSend: function () {
                 //$(".dialog-background").show(); // Show progress bar before sending the request
             },
@@ -250,20 +258,22 @@ function initializeDataTable() {
                     if (imageUrl && !imageUrl.startsWith("http")) {
                         imageUrl = "https://" + imageUrl;
                     }
-                    var imageHtml = imageUrl ? '<img src="' + imageUrl + '" alt="Company Image" class="lazyload" style="width:30px; height:30px; margin-right: 10px;" />' : '';
+var imageHtml = imageUrl 
+    ? '<img src="' + imageUrl + '" alt="Company Image" class="lazyload" style="width:30px; height:30px; border-radius: 5px; margin-right: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);" />' 
+    : '<div style="width:30px; height:30px; border-radius: 5px; background-color: #f0f0f0; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; margin-right: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">' +
+      '<span style="color: #999; font-size: 12px;">N/A</span>' + // Placeholder text when the image is unavailable
+      '</div>';
 
-                    // Create a clickable link with inline hover effects
-                    var companyLink = '<a href="/company/' + row.companyId + '" ' +
-                        'style="text-decoration: none; color: inherit;" ' +
-                        'onmouseover="this.style.color=\'blue\'; this.style.textDecoration=\'underline\';" ' +
-                        'onmouseout="this.style.color=\'inherit\'; this.style.textDecoration=\'none\';">' +
-                        '<div style="display: flex; align-items: center;">' +
-                        imageHtml +
-                        '<span class="truncate">' + data + '</span>' +
-                        '</div>' +
-                        '</a>';
+// Create a clickable link with inline hover effects
+var companyLink = '<a href="/company/' + row.companyId + '" ' +
+    'style="text-decoration: none; color: inherit; display: flex; align-items: center;" ' +
+    'onmouseover="this.style.color=\'blue\'; this.style.textDecoration=\'underline\';" ' +
+    'onmouseout="this.style.color=\'inherit\'; this.style.textDecoration=\'none\';">' +
+    imageHtml +
+    '<span class="truncate" style="color: #333;">' + data + '</span>' + //
+    '</a>';
 
-                    return companyLink;
+return companyLink;
                 }
             },
             { 'data': 'leadLocation', "autoWidth": true }
@@ -404,6 +414,7 @@ function initializeDataTable() {
         const description = data.companyDescription || 'Unavailable';
         const descriptionPreview = description !== 'Unavailable' ? description.split(" ").slice(0, 3).join(" ") : 'Unavailable';
         const fullDescription = description !== 'Unavailable' ? description : '';
+        const showMoreLink = `<a href="/company/${data.companyId}" style="color: blue; text-decoration: underline;">Show More</a>`;
 
         // Determine the label (A+, A, B) and circle color based on the email score
         const emailScore = data.emailScore || 'Unavailable';
@@ -473,7 +484,7 @@ function initializeDataTable() {
                                                                                     </div>
                                                                                     <div class="tile tooltip" style="border: 1px solid #ddd; border-radius: 8px; padding: 10px;position: relative; opacity: 10 !important;" data-title="${fullDescription}">
                                                                                         <b>Description:</b><br>
-                                                                                        <span class="description-preview" style="color: black;" title="${fullDescription}" >${descriptionPreview}</span>
+                                                                                        <span class="description-preview" style="color: black;">${descriptionPreview} ... ${showMoreLink}</span>
                                                                                     </div>
                                                                                 </div>`;
     }
